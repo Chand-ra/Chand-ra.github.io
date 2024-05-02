@@ -1,5 +1,1 @@
-Here you can say lots of fun things about your site.
-
-Maybe say a some things about yourself.
-
-Or maybe what you plan to blog about.
+Hey there! I am Chandra, an undergraduate Mathematics student at SVNIT, Surat, India with a passion for everything tech! I love geeking out about new technologies and discovering the ingenuity of old ones. The easiest way to reach me would be to write me a e-mail but I wouldn't mind a DM in any of my social handles either.
