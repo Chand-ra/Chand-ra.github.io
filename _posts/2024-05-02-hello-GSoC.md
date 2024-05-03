@@ -11,10 +11,11 @@ I already have some experience with porting tests to the new unit testing framew
 ## Goals
 The time period from May 1 to May 26 in GSoC is the 'Community bonding period'. During this time, GSoC contributors are expected to read up documentation, get familiar with the codebase and tools, set up expectations and milestones, start engaging with the community, complete the required paperwork and so forth. In my GSoC proposal, I outlined this time period to learn in-depth about reftable and contribute a few patches towards that goal. Keeping this in mind, here's a list of my goals for what's left of this week and the following one:
 - Finish setting up this blog.
-- Go through Git's Coding Guidlines again to better understand the coding style errors that I need to be on the lookout for.
+- Go through Git's [Coding Guidlines](https://github.com/git/git/blob/master/Documentation/CodingGuidelines) again to better understand the coding style errors that I need to be on the lookout for.
+- Go through Pro Git book's ['Git Internals' chapter](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain) to re-familiarize myself with Git objects and references which reftable deals with.
 - Finish reading up the [reftable documentation](https://git-scm.com/docs/reftable). (This might take some time because the document is technically dense so there is a lot to uncover).
 - Find some suitable starting patches in the reftable sub-project.
-- Finish setting up my Payoneer account.
+- Finish setting up a Payoneer account.
 
 _Till next time,_
 
