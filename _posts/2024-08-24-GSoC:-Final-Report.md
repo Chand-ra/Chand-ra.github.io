@@ -1,5 +1,3 @@
-# Summary
-
 A new unit testing framework written entirely in C was introduced to the Git mailing list last year (commit 8bf6fbd0, merge branch 'js/doc-unit-tests', 2023-12-09) with the aim of simplifying testing by offering a way to observe how low level implementation details, at the level of sequences of individual function calls, behave.
 
 Git's reftable library comes with self tests, which are exercised as part of the usual end-to-end tests and are designed to observe the end-user visible effects of Git commands. What it exercises, however, is a better match for the unit-testing framework. Hence, this GSoC project was aimed at extending the unit-testing framework by moving the reftable tests from the old setup to the new unit testing framework, and then improving the tests themselves.
