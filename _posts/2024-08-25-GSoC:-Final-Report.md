@@ -185,3 +185,23 @@ Following is the status, commits list, and mailing list link corresponding to th
 [3/4] t-reftable-readwrite: use 'for' in place of infinite 'while' loops
 
 [4/4] t-reftable-readwrite: add test for known error
+
+# What's left to do
+
+- The stack test migration patch is the only one that is left to get merged with upstream, this is something that should be finished by the next week at most.
+- `reftable/test_framework.{c, h}` and some other files corresponding to reftable test artefacts need to be removed from the `reftable/` directory. This should be done after the last test from `reftable/` has been migrated to the unit testing framework.
+- More improvements may still be added to the reftable tests. I have added all the improvements to the reftable tests that I could think of, but it's more than likely that there are more possible which didn't cross my mind at the time.
+
+# Closing remarks
+
+Talking about what I've learnt from this GSoC journey, there are too many to be listed. I barely knew any of Git or Bash before GSoC, but now I can somewhat keep up with some of the work in one of the most influential open-source communities. I also learnt what it's like to work collaboratively on a project, especially with people far more experienced and knowledgeable than me. It was a pleasure learning from them.
+
+The biggest challenge I faced during my GSoC journey was during the start, where I was trying to learn reftable's codebase and start off with the contributions. Learning the codebase of Git is like fighting a dragon with a fork for me. Every little change to be made requires researching, referencing, and asking a pile of questions. The only way to keep making progress is to learn actively on the work, and ask for help whenever you feel stuck. The rest of the journey was more-or-less smooth. There were a few difficulties that I faced in the Coding Period, but nothing that couldn't be overcome with the help of mentors.
+
+Post GSoC, I'll finish whatever little work is left regarding the migration of reftable's tests. More importantly though, I’ll maintain my passion for open source technologies and stay active with Git as a contributor. I’ll also try to be helpful to newcomers of the community and help them ease their way into this wonderful project.
+
+At the end, all I want to say is thank you to my mentors, Patrick and Christian. Thank you, Git and the community. Thank you, GSoC.
+
+_Till next time,_
+
+_Chandra_.
