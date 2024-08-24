@@ -19,7 +19,7 @@ There are a total of eight reftable tests, and I worked on moving all of these t
 
 Following is the status, commits list, and mailing list link corresponding to the patches for each of these tests. Besides working on the reftable tests, I maintained a weekly blog of my GSoC journey, starting with the Community Bonding period and ending with week 12 of the Coding Period, which can be found [here](https://chand-ra.github.io/).
 
-### basics test
+#### basics test
 **status:** merged to 'master' (commit 56346ba24e, Merge branch 'cp/reftable-unit-test')
 
 **mailing list link:** https://public-inbox.org/git/20240529171439.18271-1-chandrapratap3519@gmail.com/
@@ -36,7 +36,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [5/5] t: improve the test-case for parse_names()
 
-### record test
+#### record test
 **status:** merged to 'master' (commit 9118e46e81, Merge branch 'cp/unit-test-reftable-record')
 
 **mailing list link:** https://public-inbox.org/git/20240702074906.5587-1-chandrapratap3519@gmail.com/
@@ -65,7 +65,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [11/11] t-reftable-record: add tests for reftable_log_record_compare_key()
 
-### block test
+#### block test
 **status:** merged to 'next' (commit 234d8701da, Merge branch 'cp/unit-test-reftable-block')
 
 **mailing list link:** https://public-inbox.org/git/20240821124150.4463-1-chandrapratap3519@gmail.com/
@@ -94,7 +94,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [11/11] t-reftable-block: add tests for index blocks
 
-### tree test
+#### tree test
 **status:** merged to 'master' (commit 7b11e20bff, Merge branch 'cp/unit-test-reftable-tree')
 
 **mailing list link:** https://public-inbox.org/git/20240804141105.4268-1-chandrapratap3519@gmail.com/
@@ -111,7 +111,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [5/5] t-reftable-tree: improve the test for infix_walk()
 
-### pq test
+#### pq test
 **status:** merged to 'master' (commit d65332f241, Merge branch 'cp/unit-test-reftable-pq')
 
 **mailing list link:** https://public-inbox.org/git/20240801110453.5087-1-chandrapratap3519@gmail.com/
@@ -132,7 +132,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [7/7] t-reftable-pq: add tests for merged_iter_pqueue_top()
 
-### stack test
+#### stack test
 **status:** in progress
 
 **mailing list link:** https://public-inbox.org/git/20240823120514.11070-1-chandrapratap3519@gmail.com/
@@ -151,7 +151,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [6/6] t-reftable-stack: add test for stack iterators
 
-### merged test
+#### merged test
 **status:** merged to 'master' (commit 6c70d65712, Merge branch 'cp/unit-test-reftable-merged')
 
 **mailing list link:** https://public-inbox.org/git/20240712055041.6476-1-chandrapratap3519@gmail.com/
@@ -172,7 +172,7 @@ Following is the status, commits list, and mailing list link corresponding to th
 
 [7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR
 
-### readwrite test
+#### readwrite test
 **status:** merged to 'next' (commit 8d68f73455, Merge branch 'cp/unit-test-reftable-readwrite')
 
 **mailing list link:** https://public-inbox.org/git/20240813144440.4602-1-chandrapratap3519@gmail.com/
