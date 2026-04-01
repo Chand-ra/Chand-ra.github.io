@@ -1,0 +1,557 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chandra Pratap – Google Summer of Code 2024</title>
+    <link>http://localhost:1313/gsoc/</link>
+    <description>Recent content in Google Summer of Code 2024 on Chandra Pratap</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 24 Aug 2024 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/gsoc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>GSoC: Final Report</title>
+      <link>http://localhost:1313/gsoc/2024-08-24-gsoc-final-report/</link>
+      <pubDate>Sat, 24 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-08-24-gsoc-final-report/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This report summarizes the work done by me in my project, &lt;strong&gt;Move and improve reftable tests in the unit testing framework&lt;/strong&gt;, during Google Summer of Code &amp;lsquo;24 under Git.&lt;/p&gt;
+&lt;h1&gt;Summary&lt;/h1&gt;&lt;p&gt;A new unit testing framework written entirely in C was introduced to the Git mailing list last year (commit 8bf6fbd0, merge branch &amp;lsquo;js/doc-unit-tests&amp;rsquo;, 2023-12-09) with the aim of simplifying testing by offering a way to observe how low level implementation details, at the level of sequences of individual function calls, behave.&lt;/p&gt;
+&lt;p&gt;Git&amp;rsquo;s reftable library comes with self tests, which are exercised as part of the usual end-to-end tests and are designed to observe the end-user visible effects of Git commands. What it exercises, however, is a better match for the unit-testing framework. Hence, this GSoC project was aimed at extending the unit-testing framework by moving the reftable tests from the old setup to the new unit testing framework, and then improving the tests themselves.&lt;/p&gt;
+&lt;h1&gt;What I&amp;rsquo;ve done&lt;/h1&gt;&lt;p&gt;There are a total of eight reftable tests, and I worked on moving all of these to the unit testing framework during this GSoC project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;basics test&lt;/li&gt;
+&lt;li&gt;record test&lt;/li&gt;
+&lt;li&gt;block test&lt;/li&gt;
+&lt;li&gt;tree test&lt;/li&gt;
+&lt;li&gt;pq test&lt;/li&gt;
+&lt;li&gt;stack test&lt;/li&gt;
+&lt;li&gt;merged test&lt;/li&gt;
+&lt;li&gt;readwrite test&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Following is the status, commits list, and mailing list link corresponding to the patches for each of these tests. Besides working on the reftable tests, I maintained a weekly blog of my GSoC journey, starting with the Community Bonding period and ending with week 12 of the Coding Period, which can be found &lt;a href=&#34;https://chand-ra.github.io/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;basics test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;basics-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#basics-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;lsquo;master&amp;rsquo; (commit 56346ba24e, Merge branch &amp;lsquo;cp/reftable-unit-test&amp;rsquo;), released in Git v2.46.0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240529171439.18271-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240529171439.18271-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/5] t: move reftable/basics_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/5] t: move tests from reftable/stack_test.c to the new unit test&lt;/p&gt;
+&lt;p&gt;[3/5] t: move tests from reftable/record_test.c to the new unit test&lt;/p&gt;
+&lt;p&gt;[4/5] t: add test for put_be16()&lt;/p&gt;
+&lt;p&gt;[5/5] t: improve the test-case for parse_names()&lt;/p&gt;
+&lt;h4&gt;record test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;record-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#record-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;lsquo;master&amp;rsquo; (commit 9118e46e81, Merge branch &amp;lsquo;cp/unit-test-reftable-record&amp;rsquo;), released in Git v2.46.0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240702074906.5587-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240702074906.5587-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/11] t: move reftable/record_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/11] t-reftable-record: add reftable_record_cmp() tests for log records&lt;/p&gt;
+&lt;p&gt;[3/11] t-reftable-record: add comparison tests for ref records&lt;/p&gt;
+&lt;p&gt;[4/11] t-reftable-record: add comparison tests for index records&lt;/p&gt;
+&lt;p&gt;[5/11] t-reftable-record: add comparison tests for obj records&lt;/p&gt;
+&lt;p&gt;[6/11] t-reftable-record: add reftable_record_is_deletion() test for ref records&lt;/p&gt;
+&lt;p&gt;[7/11] t-reftable-record: add reftable_record_is_deletion() test for log records&lt;/p&gt;
+&lt;p&gt;[8/11] t-reftable-record: add reftable_record_is_deletion() test for obj records&lt;/p&gt;
+&lt;p&gt;[9/11] t-reftable-record: add reftable_record_is_deletion() test for index records&lt;/p&gt;
+&lt;p&gt;[10/11] t-reftable-record: add tests for reftable_ref_record_compare_name()&lt;/p&gt;
+&lt;p&gt;[11/11] t-reftable-record: add tests for reftable_log_record_compare_key()&lt;/p&gt;
+&lt;h4&gt;block test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;block-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#block-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;rsquo;next&amp;rsquo; (commit 234d8701da, Merge branch &amp;lsquo;cp/unit-test-reftable-block&amp;rsquo;), will merge with &amp;lsquo;master&amp;rsquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240821124150.4463-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240821124150.4463-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/11] t: move reftable/block_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/11] t: harmonize t-reftable-block.c with coding guidelines&lt;/p&gt;
+&lt;p&gt;[3/11] t-reftable-block: release used block reader&lt;/p&gt;
+&lt;p&gt;[4/11] t-reftable-block: use reftable_record_equal() instead of check_str()&lt;/p&gt;
+&lt;p&gt;[5/11] t-reftable-block: use reftable_record_key() instead of strbuf_addstr()&lt;/p&gt;
+&lt;p&gt;[6/11] t-reftable-block: use block_iter_reset() instead of block_iter_close()&lt;/p&gt;
+&lt;p&gt;[7/11] t-reftable-block: use xstrfmt() instead of xstrdup()&lt;/p&gt;
+&lt;p&gt;[8/11] t-reftable-block: remove unnecessary variable &amp;lsquo;j&amp;rsquo;&lt;/p&gt;
+&lt;p&gt;[9/11] t-reftable-block: add tests for log blocks&lt;/p&gt;
+&lt;p&gt;[10/11] t-reftable-block: add tests for obj blocks&lt;/p&gt;
+&lt;p&gt;[11/11] t-reftable-block: add tests for index blocks&lt;/p&gt;
+&lt;h4&gt;tree test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;tree-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#tree-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;lsquo;master&amp;rsquo; (commit 7b11e20bff, Merge branch &amp;lsquo;cp/unit-test-reftable-tree&amp;rsquo;), released in Git v2.46.0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240804141105.4268-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240804141105.4268-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/5] reftable: remove unnecessary curly braces in reftable/tree.c&lt;/p&gt;
+&lt;p&gt;[2/5] t: move reftable/tree_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[3/5] t-reftable-tree: split test_tree() into two sub-test&lt;/p&gt;
+&lt;p&gt;[4/5] t-reftable-tree: add test for non-existent key&lt;/p&gt;
+&lt;p&gt;[5/5] t-reftable-tree: improve the test for infix_walk()&lt;/p&gt;
+&lt;h4&gt;pq test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;pq-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#pq-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;lsquo;master&amp;rsquo; (commit d65332f241, Merge branch &amp;lsquo;cp/unit-test-reftable-pq&amp;rsquo;), released in Git v2.46.0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240801110453.5087-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240801110453.5087-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/7] reftable: remove unncessary curly braces in reftable/pq.c&lt;/p&gt;
+&lt;p&gt;[2/7] reftable: change the type of array indices to &amp;lsquo;size_t&amp;rsquo; in reftable/pq.c&lt;/p&gt;
+&lt;p&gt;[3/7] t: move reftable/pq_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[4/7] t-reftable-pq: make merged_iter_pqueue_check() static&lt;/p&gt;
+&lt;p&gt;[5/7] t-reftable-pq: make merged_iter_pqueue_check() callable by reference&lt;/p&gt;
+&lt;p&gt;[6/7] t-reftable-pq: add test for index based comparison&lt;/p&gt;
+&lt;p&gt;[7/7] t-reftable-pq: add tests for merged_iter_pqueue_top()&lt;/p&gt;
+&lt;h4&gt;stack test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;stack-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#stack-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; In-progress, waiting for feedback on v2 of the patch series&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240823120514.11070-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240823120514.11070-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/6] t: move reftable/stack_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/6] t: harmonize t-reftable-stack.c with coding guidelines&lt;/p&gt;
+&lt;p&gt;[3/6] t-reftable-stack: use Git&amp;rsquo;s tempfile API instead of mkstemp()&lt;/p&gt;
+&lt;p&gt;[4/6] t-reftable-stack: use reftable_ref_record_equal() to compare ref records&lt;/p&gt;
+&lt;p&gt;[5/6] t-reftable-stack: add test for non-default compaction factor&lt;/p&gt;
+&lt;p&gt;[6/6] t-reftable-stack: add test for stack iterators&lt;/p&gt;
+&lt;h4&gt;merged test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;merged-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#merged-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;lsquo;master&amp;rsquo; (commit 6c70d65712, Merge branch &amp;lsquo;cp/unit-test-reftable-merged&amp;rsquo;), released in Git v2.46.0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240712055041.6476-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240712055041.6476-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/7] t: move reftable/merged_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/7] t: harmonize t-reftable-merged.c with coding guidelines&lt;/p&gt;
+&lt;p&gt;[3/7] t-reftable-merged: improve the test for t_merged_single_record()&lt;/p&gt;
+&lt;p&gt;[4/7] t-reftable-merged: improve the const-correctness of helper functions&lt;/p&gt;
+&lt;p&gt;[5/7] t-reftable-merged: add tests for reftable_merged_table_max_update_index&lt;/p&gt;
+&lt;p&gt;[6/7] t-reftable-merged: use reftable_ref_record_equal to compare ref records&lt;/p&gt;
+&lt;p&gt;[7/7] t-reftable-merged: add test for REFTABLE_FORMAT_ERROR&lt;/p&gt;
+&lt;h4&gt;readwrite test&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;readwrite-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#readwrite-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;status:&lt;/strong&gt; merged to &amp;rsquo;next&amp;rsquo; (commit 8d68f73455, Merge branch &amp;lsquo;cp/unit-test-reftable-readwrite&amp;rsquo;), will merge with &amp;lsquo;master&amp;rsquo;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;mailing list link:&lt;/strong&gt; &lt;a href=&#34;https://public-inbox.org/git/20240813144440.4602-1-chandrapratap3519@gmail.com/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://public-inbox.org/git/20240813144440.4602-1-chandrapratap3519@gmail.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;commits:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1/4] t: move reftable/readwrite_test.c to the unit testing framework&lt;/p&gt;
+&lt;p&gt;[2/4] t-reftable-readwrite: use free_names() instead of a for loop&lt;/p&gt;
+&lt;p&gt;[3/4] t-reftable-readwrite: use &amp;lsquo;for&amp;rsquo; in place of infinite &amp;lsquo;while&amp;rsquo; loops&lt;/p&gt;
+&lt;p&gt;[4/4] t-reftable-readwrite: add test for known error&lt;/p&gt;
+&lt;h1&gt;What&amp;rsquo;s left to do&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;The stack test migration patch is the only one that is left to get merged with upstream, this is something that should be finished by the next week at most.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;reftable/test_framework.{c, h}&lt;/code&gt; and some other files corresponding to reftable test artefacts need to be removed from the &lt;code&gt;reftable/&lt;/code&gt; directory. This should be done after the last test from &lt;code&gt;reftable/&lt;/code&gt; has been migrated to the unit testing framework.&lt;/li&gt;
+&lt;li&gt;More improvements may still be added to the reftable tests. I have added all the improvements to the reftable tests that I could think of, but it&amp;rsquo;s more than likely that there are more possible which didn&amp;rsquo;t cross my mind at the time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Closing remarks&lt;/h1&gt;&lt;p&gt;Talking about what I&amp;rsquo;ve learnt from this GSoC journey, there are too many to be listed. I barely knew any of Git or Bash before GSoC, but now I can somewhat keep up with some of the work in one of the most influential open-source communities. I also learnt what it&amp;rsquo;s like to work collaboratively on a project, especially with people far more experienced and knowledgeable than me. It was a pleasure learning from them.&lt;/p&gt;
+&lt;p&gt;The biggest challenge I faced during my GSoC journey was during the start, where I was trying to learn reftable&amp;rsquo;s codebase and start off with the contributions. Learning the codebase of Git is like fighting a dragon with a fork for me. Every little change to be made requires researching, referencing, and asking a pile of questions. The only way to keep making progress is to learn actively on the work, and ask for help whenever you feel stuck. The rest of the journey was more-or-less smooth. There were a few difficulties that I faced in the Coding Period, but nothing that couldn&amp;rsquo;t be overcome with the help of mentors.&lt;/p&gt;
+&lt;p&gt;Post GSoC, I&amp;rsquo;ll finish whatever little work is left regarding the migration of reftable&amp;rsquo;s tests. More importantly though, I’ll maintain my passion for open source technologies and stay active with Git as a contributor. I’ll also try to be helpful to newcomers of the community and help them ease their way into this wonderful project.&lt;/p&gt;
+&lt;p&gt;At the end, all I want to say is thank you to my mentors, Patrick and Christian. Thank you, Git and the community. Thank you, GSoC.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 12</title>
+      <link>http://localhost:1313/gsoc/2024-08-18-coding-period-week-12/</link>
+      <pubDate>Sun, 18 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-08-18-coding-period-week-12/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 12 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous ones, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for block and readwrite test migration to the mailing list and received feedback on them. The patch series for readwrite has been merged with upstream and should land in the &amp;lsquo;master&amp;rsquo; branch soon. As for block test, I sent the patch series to the mailing list and received feedback on it, reworked the commits and rerolled the updated version towards the end of the week. There is a small mistake that causes a leak in the CI which I&amp;rsquo;ll fix along with incorporating new feedback in the next reroll.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for eight tests (readwrite, stack, merged, tree, pq, record, block and basics) until now, but only six (readwrite, tree, basics, merged, pq and record) have been merged with upstream. Hence, similar to the last week, my primary goal for the next week is to get more tests reviewed and merged with upstream.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well and I faced little to no issues, thanks to the experience I accumulated from the work I performed in the last few weeks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 11</title>
+      <link>http://localhost:1313/gsoc/2024-08-11-coding-period-week-11/</link>
+      <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-08-11-coding-period-week-11/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 11 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for stack and readwrite test migration to the mailing list and received feedback on them. The patch series for stack had to be put on hold because that test file is currently undergoing some other development on the mailing list. As for readwrite test, I sent the patch series to the mailing list a couple of times and received feedback on them, I will rework the commits and roll the updated version in the next week. Hopefully it&amp;rsquo;s in a good enough position to be merged to upstream by now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for eight tests (readwrite, stack, merged, tree, pq, record, block and basics) until now, but only five (tree, basics, merged, pq and record) have been merged with upstream. Hence, similar to the last week, my primary goal for the next week is to get more tests reviewed and merged with upstream. Other than that, I will try to find and work on some other tasks related to the reftable sub-project.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well and I faced little to no issues, thanks to the experience I accumulated from the work I performed in the last few weeks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 9 and 10</title>
+      <link>http://localhost:1313/gsoc/2024-08-03-coding-period-week-9-and-10/</link>
+      <pubDate>Sat, 03 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-08-03-coding-period-week-9-and-10/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 10 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework. Due to academic reasons, I was unable to write a blog post for week 9 of GSoC&amp;rsquo;s Coding Period, so this post includes the blog-points for that week as well, alongside the past one (week 10).&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting readwrite test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. These are completed now and the commit series is in a good enough position to see the mailing list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for pq and tree test migration to the mailing list and received feedback on them. The patch series for pq test was merged with &amp;rsquo;next&amp;rsquo;. As for tree test, I will send the updated patch series back to the mailing list next week. Hopefully it&amp;rsquo;s in a good enough position to be merged to upstream by now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With the readwrite tests finished, I have completed most of the planned work for this GSoC project, and it&amp;rsquo;s only a matter of back and forth on the mailing list before the changes reach upstream. Since that doesn&amp;rsquo;t require a lot of time and there is still a while to go before this year&amp;rsquo;s GSoC reaches completion, I will try to find some other reftable-related tasks to work on.&lt;/p&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for eight tests (readwrite, stack, merged, tree, pq, record, block and basics) until now, but only four (basics, merged, pq and record) have been merged with upstream. Hence, similar to the last week, my primary goal for the next week is to get more tests reviewed and merged with upstream. Other than that, I will try to find and work on some other tasks related to the reftable sub-project.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well and I faced little to no issues, thanks to the experience I accumulated from the work I performed in the last few weeks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 8</title>
+      <link>http://localhost:1313/gsoc/2024-07-21-coding-period-week-8/</link>
+      <pubDate>Sun, 21 Jul 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-07-21-coding-period-week-8/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 8 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting readwrite test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. These are still in-progress and should not take too long to complete.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for tree test migration to the mailing list this week and received feedback on it. I addressed almost all the feedback received, and will send the patch series back to the mailing list next week. Hopefully it&amp;rsquo;s in a good enough position to be merged to upstream by now.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for seven tests (stack, merged, tree, pq, record, block and basics) until now, but only three (basics, merged and record) have been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get more tests merged with upstream. Other than that, I will try to finish the work on the only remaining test, readwrite.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did face some miniscule issues here and there but was able to easily get past them due to the experience I accumulated from the work I performed in the last few weeks.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 7</title>
+      <link>http://localhost:1313/gsoc/2024-07-14-coding-period-week-7/</link>
+      <pubDate>Sun, 14 Jul 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-07-14-coding-period-week-7/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 7 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting readwrite test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. These are still in-progress and should not take too long to complete.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting tree test to the unit testing framework&lt;/strong&gt;: The patch for this test was already reviewed by Patrick and Christian some weeks ago but wasn&amp;rsquo;t merged to upstream for some reason. I&amp;rsquo;ve modified the patch again to include test renames and plan on sending the updated patch next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting stack test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. I finished all my planned work for this test this week and the patch is ready to be sent to the mailing list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for merged test migration to the mailing list this week and received feedback on it. I addressed almost all the feedback received, and sent the patch series back to the mailing list. Hopefully it&amp;rsquo;s in a good enough position to be merged to upstream by now.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for six tests (merged, tree, pq, record, block and basics) until now, but only two (basics and record) has been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get more tests merged with upstream. Other than that, I will try to finish the work on the remaining tests.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did face some small issues here and there but was able to get over them due to the experience I accumulated from the work I performed in the last few weeks. Hopefully I can continue to do the same in the future.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 6</title>
+      <link>http://localhost:1313/gsoc/2024-07-07-coding-period-week-6/</link>
+      <pubDate>Sun, 07 Jul 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-07-07-coding-period-week-6/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 6 of GSoC&amp;rsquo;s official Coding Period, which means half of the program is over by now. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting readwrite test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. These are still in-progress and should not take too long to complete.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting merged test to the unit testing framework&lt;/strong&gt;: I finished a large part of my planned work for these tests last week, and the work was completely finished by this week. I sent the resulting patch for this test to the mailing list and recieved feedback on it as well.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting stack test to the unit testing framework&lt;/strong&gt;: I started working on this test simultaneously alongside merged test last week and made some good progress. There is still some work left to be done which I couldn&amp;rsquo;t get to this week, so I will try to finish this up by the next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for merged test migration to the mailing list this week and received feedback on it. I have addressed almost all the feedback received, and plan to send the patch series back to the mailing list next week.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for six tests (merged, tree, pq, record, block and basics) until now, but only two (basics and record) has been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get more tests merged with upstream. Other than that, I will try to finish the work on the remaining tests.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did face some roadblocks but was able to get over them due to the experience I accumulated from the work I performed in the last few weeks. Hopefully I can continue to do the same in the future.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 5</title>
+      <link>http://localhost:1313/gsoc/2024-06-30-coding-period-week-5/</link>
+      <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-06-30-coding-period-week-5/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 5 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting readwrite test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. These are still in-progress and should be completed by the next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting merged test to the unit testing framework&lt;/strong&gt;: I decided to work on merged test next. I was able to finish a large part of my planned work for these tests in this week, and the work should be finished by the next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting stack test to the unit testing framework&lt;/strong&gt;: I started working on this test simultaneously alongside merged test and have made some good progress. I&amp;rsquo;ll try to finish this test by the next week, but that depends on the progress made with the other tests (readwrite and merged) so I&amp;rsquo;m not very sure if I&amp;rsquo;ll be able to.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patch series for record test migration to the mailing list this week and received feedback on it. I addressed almost all the feedback received, and sent the patch series patches back to the mailing list.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for five tests (tree, pq, record, block and basics) until now, but only one (basics) has been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get more tests merged with upstream. Other than that, I will try to finish the work on the remaining tests.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did face some roadblocks but was able to get over them due to the experience I accumulated from the work I performed in the last few weeks. Hopefully I can continue to do the same in the future.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 4</title>
+      <link>http://localhost:1313/gsoc/2024-06-23-coding-period-week-4/</link>
+      <pubDate>Sun, 23 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-06-23-coding-period-week-4/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 4 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting record test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. I was able to completely finish the work for these tests by this week, and sent the resulting patch series to the mailing list.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting readwrite test to the unit testing framework&lt;/strong&gt;: I decided to work on readwrite test next. This test took me an entire week to complete and that is mostly because this is one of the larger reftable test files and the improvements that I had in mind for this test ended up being more difficult to implement than anticipated. In any case, I was able to finish a large part of my planned work for these tests in this week, and the work should be finished by the next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting block test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. I was able to completely finish the work for these tests by this week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting stack test to the unit testing framework&lt;/strong&gt;: I had some extra time towards the end of the week where I did not wish to work on readwrite test, so I decided to start working on porting stack test to the unit testing framework. This test is the largest one in the &lt;code&gt;reftable/&lt;/code&gt; directory, so it will take some time to see it to completion.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for five tests (tree, pq, record, block and basics) until now, but only one (basics) has been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get more tests merged with upstream. Other than that, I will finish the work on readwrite test and start working on porting the next test to the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did not face any particular roadblocks but that was mostly due to the fact that I was working on tests that I had already studied. In the upcoming weeks, the tests will become more unfamiliar and simultaneously grow in complexity and I am sure I will encounter more roadblocks than I did this week, but I won&amp;rsquo;t stress out too much about that for now and tackle these problems as I encounter them.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 3</title>
+      <link>http://localhost:1313/gsoc/2024-06-16-coding-period-week-3/</link>
+      <pubDate>Sun, 16 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-06-16-coding-period-week-3/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 3 of GSoC&amp;rsquo;s official Coding Period. Similar to the previous few, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting record test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but there were still a few finishing touches that I wished to add. I was able to completely finish the work for these tests by this week, and plan on sending the patch for this to the mailing list next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting block test to the unit testing framework&lt;/strong&gt;: I decided to work on block test next. Surprisingly, this test took me an entire week to complete and that is mostly because the improvements that I had in mind for this test ended up being more difficult to implement than anticipated. In any case, I was able to finish a large part of my planned work for these tests in this week, and the work should be finished by the next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on feedback from the mailing list&lt;/strong&gt;: I sent the patches for tree test and pq test migration to the mailing list this week and received feedback on them. I addressed almost all the feedback received, and both these patches are now in a good enough position to be merged with upstream.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for four tests (tree, pq, record and basics) until now, but only one (basics) has been merged with upstream. Hence, similar to last week, one of my goals for the next week is to get tree test and pq test merged with upstream. I will try to get record test merged as well, but since it has more changes (which translates to a bigger patch) and I have not received any feedback on it yet, I am not getting my hopes too high. Other than that, I will work on readwrite test and revisit the official reftable documentation to iron out the parts that I cannot grasp yet, which is something I planned on but could not do last week.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sailing as well. I did not face any particular roadblocks but that was mostly due to the fact that I was working on tests that I had already studied. In the upcoming weeks, the tests will become more unfamiliar and simultaneously grow in complexity and I am sure I will encounter more roadblocks than I did this week, but I won&amp;rsquo;t stress out too much about that for now and tackle these problems as I encounter them.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 2</title>
+      <link>http://localhost:1313/gsoc/2024-06-09-coding-period-week-2/</link>
+      <pubDate>Sun, 09 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-06-09-coding-period-week-2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;This week marks week 2 of GSoC&amp;rsquo;s official Coding Period. Similar to week 1, the majority of my time this week was devoted to writing code for the reftable tests in the unit testing framework.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting pq test to the unit-testing framework&lt;/strong&gt;: pq test exercises the priority queue functionality of reftable as defined by &lt;code&gt;reftable/pq.{c, h}&lt;/code&gt;. I started working on this test the last week and was able to finish the first iteration of the migration patch this week. With feedback from Christian and Patrick on the first iteration, I finished the second iteration of this patch around the end of the week and was able to send it to the mailing list as well. I have yet to receive any feedback on the second iteration, but I hope it&amp;rsquo;s good enough to be merged with upstream.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting tree test to the unit testing framework&lt;/strong&gt;: Most of the work for this test was completed last week, but I was unable to send the patch for this test to the mailing list because Patrick informed me that one of his patches was about to add a dedicated function for pointer comparison to the unit testing library which could be used in the new tree test. Therefore I decided to put this patch on hold and work on other tests until Patrick&amp;rsquo;s patch landed master. Well, Patrick&amp;rsquo;s patch hit master on Saturday and I could finally utilize the unit-testing library&amp;rsquo;s new functionality in this patch. There were a few other small feedback points that I addressed as well, and the patch is now ready to be sent to the mailing list next week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting record test to the unit testing framework&lt;/strong&gt;: Since most of the other tests that I mentioned were carried on from the previous week, they were already finished to a good extent and I had quite some time to dedicate to porting a new test. The record test was the one that I worked on in this week. I was able to almost finish this test within this week, but there is still some polishing that I wish to add. I will probably finish this test by Tuesday of the upcoming week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Review the readwrite tests&lt;/strong&gt;: I wasn&amp;rsquo;t able to devote much time to this, but I finished understanding a small portion of the readwrite tests this week.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;ll probably drop my strategy of understanding the reftable codebase through tests from the upcoming week. It was definitely helpful when I started out and was unfamiliar with the codebase but after working with the code for some time now, I think I can make do without that strategy and utilize that time on better endeavors. I&amp;rsquo;ll still keep it in my mind&amp;rsquo;s backseat though, in case I come across a part of the codebase that I cannot understand through other means.&lt;/p&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I have finished the work for three tests (tree, pq and basics) up until now, but only one (basics) has been merged with upstream. Hence, my primary goal for the next week is to get tree test and pq test merged with upstream. I&amp;rsquo;ll try to get record test merged as well, but since it has more changes (which translates to a bigger patch) and there is still some work left to do, I&amp;rsquo;m not getting my hopes too high. Other than that, I will revisit the official reftable documentation next week and try to iron out the parts that I cannot grasp yet.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Like last week, this one was more or less a smooth sail as well. I did not face any particular roadblocks but that is mostly due to the fact that I was working on tasks carried over from the last week. In the upcoming weeks, the tests will grow in complexity and I&amp;rsquo;m sure I&amp;rsquo;ll encounter more roadblocks than I did this week, but I won&amp;rsquo;t stress out too much about that for now and tackle these problems as I encounter them.&lt;/p&gt;
+&lt;p&gt;Besides that, we had our introductory meet for GSoC this week, with the attendees being the interns and mentors for this cohort. I had a fun time meeting and chatting with everyone. A Slack channel with the current GSoC interns and mentors was set up as well, and I look forward to interacting with everyone there.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding Period: Week 1</title>
+      <link>http://localhost:1313/gsoc/2024-06-02-coding-period-week-1/</link>
+      <pubDate>Sun, 02 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-06-02-coding-period-week-1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;GSoC&amp;rsquo;s Community Bonding period came to an end last week, marking the start of the official coding period. As such, the majority of my time this week was devoted to writing actual code and a small part towards reading up on those parts of the codebase that I haven&amp;rsquo;t covered yet.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish porting basics test to the unit-testing framework&lt;/strong&gt;: The first test that I worked on in my project of &amp;lsquo;moving and improving reftable tests to the unit testing framework&amp;rsquo; was the basics test. It was the easiest test of them all and hence a good candidate for the first test to port. The coding part was not very difficult, and I think I knocked it out in a day, but what consumed most of my time was breaking up the overall work into appropriate commits, writing a good patch cover letter, writing better commit messages, and other tasks of the sort. I received a lot of help and feedback from my mentors Christian (@GitLab) and Patrick (@GitLab) and thank them for being patient with me. The patch for this port has been merged with &amp;lsquo;seen&amp;rsquo; as of now.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting tree test to the unit testing framework&lt;/strong&gt;: This was another easy test to work on that I completed within this week as well. The experience from working on the basics test helped me a lot here. However, I wasn&amp;rsquo;t able to send the patch for this test to the mailing list because Patrick informed me that one of his patches is about to add a dedicated function for pointer-comparison to the unit testing library, and that is something I could use in the new tree test. So I decided to put this patch on hold and work on something else until Patrick&amp;rsquo;s patch hits master.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish reading around pq test&lt;/strong&gt;: pq test exercises the priority queue functionality of reftable as defined by &lt;code&gt;reftable/pq.{c, h}&lt;/code&gt;. As a part of my earlier approach to understanding reftable&amp;rsquo;s codebase through the existing tests, I finished reading around the pq test this week as well. This was easy work as well because I was already familiar with the concept of a priority queue through the Data Structures &amp;amp; Algorithms course in my college.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Work on porting pq test to the unit testing framework&lt;/strong&gt;: This was another easy test that I was able to complete around 90% of within this week. There is still some polishing that I wish to add, but I&amp;rsquo;m pretty sure I can finish that on the first day of the upcoming week.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I have to admit, I&amp;rsquo;m having a lot more fun in the Coding Period of GSoC than I did in the Community Bonding period. I remember struggling to put in around 30 hours of work per week during the Community Bonding Period, but it felt like nothing to me in the past coding week. I&amp;rsquo;ll have to attribute that to the fact that writing code is way more fun than reading code.&lt;/p&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan on using the same strategy for the next week that I used this week, which is to divide my time into incrementally porting the tests to the unit-testing framework and reading up on those parts of reftable that I haven&amp;rsquo;t seen yet. I hope to finish the patch for the tree test and pq test and get them merged to &amp;lsquo;seen&amp;rsquo; in the upcoming week while simultaneously working on either block tests or record tests. I also hope to finish understanding a good part of the readwrite test within this period.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I struggled a bit with using &lt;code&gt;git send-mail&lt;/code&gt; for my patches because I used &lt;a href=&#34;https://gitgitgadget.github.io/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitGitGadget&lt;/a&gt; for all of my patches pre-GSoC, but I think I&amp;rsquo;m comfortable with it now. I also faced some difficulties with appropriately structuring my patches, but my mentors helped me overcome that. Last week was a smooth sail because the tests that I worked on were the easiest of the whole bunch, but in the upcoming weeks, the tests will grow in complexity, and I am sure to hit more roadblocks than I did this week. There is also the fact that I haven&amp;rsquo;t touched upon stack test, merged test, refname test, and read-write test yet, and these are some of the larger and more complex tests. I will probably allocate more time towards the goal of understanding the codebase than I did last week to combat this.&lt;/p&gt;
+&lt;p&gt;Besides all that, we have a meet for GSoC with all the interns and mentors in the upcoming week, which I really look forward to.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Community Bonding: Week 3</title>
+      <link>http://localhost:1313/gsoc/2024-05-26-community-bonding-week-3/</link>
+      <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-05-26-community-bonding-week-3/</guid>
+      <description>
+        
+        
+        &lt;p&gt;It only feels like a few days since the start of GSoC 2024 but with the past week, the Community Bonding Period came to an end. This week, I continued with my last week&amp;rsquo;s goal of understanding the reftable backend and feel I have made good progress towards that.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Finish reading Patrick&amp;rsquo;s blog material&lt;/strong&gt;: A few days ago, my mentor Patrick Steinhardt (@ GitLab) provided me with material for a new blog about the reftable backend that he is currently working on. The blog consists of a .md file and various graphics explaining reftable&amp;rsquo;s sub-parts. I worked over the blog and graphics this week and it helped me a lot in my quest to understand the reftable backend.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish reading reftable documentation&lt;/strong&gt;: At the start of the Community Bonding period, I struggled to understand a large part of Git&amp;rsquo;s &lt;a href=&#34;https://git-scm.com/docs/reftable#Update-transactions&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;reftable documentation&lt;/a&gt;. But with my mentors&amp;rsquo; help (especially the blog material by Patrick), I believe I understand around 80% of the documentation now. This is a big milestone for me because it has made understanding the codebase a lot easier.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish understanding the block tests&lt;/strong&gt;: Last week, I decided to change my strategy and employ my plan of &amp;lsquo;understanding reftable&amp;rsquo;s codebase through the existing tests&amp;rsquo; on the block tests instead of the stack tests, and I&amp;rsquo;m happy that I did. Blocks are a lower-level component of reftable than stacks which made debugging and understanding their tests a lot easier. I was able to complete the block tests by the middle of the week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish understanding the record tests&lt;/strong&gt;: Since I was done with the block tests by the middle of the week, I decided to go through the record tests because records, akin to blocks, form a low-level component of the reftable backend. I was able to cover these tests this week as well.&lt;/li&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Since the official coding period starts in the upcoming week, I plan to divide my time into incrementally porting those tests to the unit testing framework that I have already skimmed over, and using my earlier plan of understanding reftable&amp;rsquo;s codebase through tests to cover the parts that I haven&amp;rsquo;t yet. Because my project is about improving the reftable tests as much as moving them to the new testing framework, I plan to work on improving the tests in all ways that I can currently think of, like harmonizing the coding style, adding more documentation, adding tests for functions that don&amp;rsquo;t have any, alongside porting them. I hope to finish the first iteration of the reftable tests migration patch before the midterm evaluation.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I faced some difficulties with formulating an appropriate plan to accomplish my goal of understanding the reftable codebase, but I believe that through my work in the Community Bonding Period, I have arrived at a good approach and have used it to understand a good portion of the codebase by now. There&amp;rsquo;s still quite a bit that I do not understand, but I believe I can incrementally work towards those parts as I did with the rest of the codebase. Besides that, I am excited to finally write some code in the upcoming weeks. It is surely going to be challenging but I believe I can push through those challenges.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Community Bonding: Week 2</title>
+      <link>http://localhost:1313/gsoc/2024-05-19-community-bonding-week-2/</link>
+      <pubDate>Sun, 19 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-05-19-community-bonding-week-2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;It has been around two weeks since the start of GSoC&amp;rsquo;s Community Bonding period. As I mentioned in the previous post, my primary goal for this period is to familiarize myself with the reftable sub-project&amp;rsquo;s codebase and gain an understanding of reftable&amp;rsquo;s underlying workings. I covered just about everything else I had planned for the Community Bonding period last week, so this week was entirely dedicated to this one goal.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;What I did up until last week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My latest approach towards understanding reftable&amp;rsquo;s codebase was to debug the already present tests for reftable and step through the call stack to see what each function is supposed to do and how. This proved to be a better approach than the last one (debug the codebase as a user), but it still has some holes. I decided to apply this method on the stack tests first and that ended up being a poor decision because:
+i) the stack tests have more test-cases than any other tests
+ii) the stack is a higher-level component of reftable compared to readers, writers, blocks, etc. due to which I was stuck debugging through a single function call in stack.c for multiple hours and the function call stack spanned multiple files like reader.c, blocksource.c, writer.c, making it difficult to keep track of the entire picture.&lt;/p&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I believe my strategy of debugging through the tests is still pretty worthwhile, but I have decided to abandon &lt;code&gt;stack.c&lt;/code&gt; for now and to shift my focus to a more fundamental part of reftable, &lt;code&gt;block.c&lt;/code&gt; and &lt;code&gt;blocksource.c&lt;/code&gt;. The block tests have a single test-case so it should be easy enough to knock out in a day or two, and since blocks are the &amp;lsquo;building blocks&amp;rsquo; of reftable, understanding their innards will make understanding the rest of the codebase easier as well. Since this week is the last one in the Community Bonding period, I believe it will no longer be possible for me to go through every single test, so I have decided to cover as many tests as I can in the remaining days, and understand the rest of reftable&amp;rsquo;s workings solely through the documentation for now.&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I faced some difficulties with my new approach towards understanding reftable, but I have modified it again to suit me better. I hope the sailing goes smoother this time than it did last week. I can understand a lot more of reftable&amp;rsquo;s &lt;a href=&#34;https://git-scm.com/docs/reftable&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;official documentation&lt;/a&gt; than I did earlier but there are still some parts I have yet to fully grasp. I plan on seeking help from my mentors to push through those parts. Besides that, the previous week&amp;rsquo;s challenge of finding a suitable reftable patch to work on still remains but it&amp;rsquo;s in the backseat for now, and I don&amp;rsquo;t plan on actively tackling it this week.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Community Bonding: Week 1</title>
+      <link>http://localhost:1313/gsoc/2024-05-12-community-bonding-week-1/</link>
+      <pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-05-12-community-bonding-week-1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;It has been a week and a few days since the start of GSoC&amp;rsquo;s Community Bonding period. Like I mentioned in my proposal and the previous post, my primary goal for this period is to familiarize myself with the reftable sub-project&amp;rsquo;s codebase and gain an understanding of reftable&amp;rsquo;s underlying workings. This has been the epicentre of my focus for the past week, besides working on the other goals I mentioned in last week&amp;rsquo;s post.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Set up my Payoneer account&lt;/strong&gt;: I had to face some challenges with setting up a Payoneer account to recieve the GSoC stipend but with the help of GSoC support, I was able to finish this task by this week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Set up this blog&lt;/strong&gt;: A good amount of this goal was already accomplished when I wrote my first blog post last week, but there were a few finishing touches and customizations I wanted to perform which I completed over the last week.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Go through Git&amp;rsquo;s relevant documentation&lt;/strong&gt;: There are some Git documentation besides the reftable ones which are of particular importance in this project, like Git&amp;rsquo;s &lt;a href=&#34;https://github.com/git/git/blob/master/Documentation/CodingGuidelines&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coding Guidelines&lt;/a&gt; because one of the goals of this GSoC project is to refactor the reftable tests according to Git&amp;rsquo;s coding standards. Another documentation of interest is the Pro-Git book&amp;rsquo;s &lt;a href=&#34;https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;lsquo;Git Internals&amp;rsquo; chapter&lt;/a&gt; which outlines Git&amp;rsquo;s underlying data structures (particularly the refs and tags backend) in an easily-digestible manner. Although I was already somewhat familiar with these documents due to my contributions pre-GSoC, I went over them once again this week to refresh my memory.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finish reading up the reftable documentation&lt;/strong&gt;: The official &lt;a href=&#34;https://git-scm.com/docs/reftable#Update-transactions&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Git reftable documentation&lt;/a&gt; comprehensively outlines the functioning of the reftable backend. My initial plan was to understand reftable&amp;rsquo;s internals solely through this documentation, but as I went through with this plan over the past week, I discovered that the documentation was long and technically dense which rendered simply reading over the documentation unfruitful. Nevertheless, I covered a good portion of documentation and skimmed over what I couldn&amp;rsquo;t understand this week.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Since my original plan of understanding reftable&amp;rsquo;s codebase with the help of reftable&amp;rsquo;s official documentation did not work very well, I decided to change my approach to using the reftable backend as an end-users and debugging through the code to see what&amp;rsquo;s happening in action. This plan proved to be better than the last one but it was still somewhat confusing because every single reftable operation touches a large portion of its codebase making it difficult to keep track of what action each function performs. I decided to modify this plan further and instead of debugging my actions as an end-user, I decided to debug the already present tests for reftable. This approach proved to be the most suitable as each test exercises only a small part of reftable&amp;rsquo;s code and that makes it much easier to keep track of individual functions as well as the overall picture.&lt;/p&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan to use the new approach I mentioned above in the upcoming week to progress towards my goal of understanding reftable&amp;rsquo;s codebase in-depth. I have already covered the code in &lt;code&gt;basics.{c,h}&lt;/code&gt; and understand it to a pretty good extent, and covered some basic parts of &lt;code&gt;stack.c&lt;/code&gt;. I will continue studying the rest of &lt;code&gt;stack.c&lt;/code&gt; in the upcoming week and modify the plan further if necessary (hopefully not).&lt;/p&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I faced some difficulties with understanding reftable&amp;rsquo;s codebase and formulating an appropriate plan to accomplish that goal but I believe I have found a good approach which I can use to incrementally work towards the goal.&lt;/p&gt;
+&lt;p&gt;Another challenge I faced was finding a suitable reftable patch to work on. With my pre-GSoC contributions, I would find an appropriate issue to work on by searching for keywords like &amp;lsquo;NEEDSWORK&amp;rsquo;, &amp;lsquo;TODO&amp;rsquo;, and &amp;lsquo;FIXME&amp;rsquo; in Git&amp;rsquo;s codebase using grep/git-grep but this approach doesn&amp;rsquo;t work with reftable&amp;rsquo;s codebase. Searching for these keywords in the reftable directory doesn&amp;rsquo;t output anything useful. I am currently occupied with understanding the codebase so this isn&amp;rsquo;t something I&amp;rsquo;ve explored deeply or care much about as of now, but after I gain a non-trivial understanding of the code and want to apply that to an actual patch this is surely something I&amp;rsquo;ll have to tackle.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Hello GSoC!</title>
+      <link>http://localhost:1313/gsoc/2024-05-02-hello-gsoc/</link>
+      <pubDate>Thu, 02 May 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/gsoc/2024-05-02-hello-gsoc/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Hello, GSoC!&lt;/h1&gt;&lt;p&gt;This is Chandra, and I have been selected for the Google Summer of Code 2024 program with Git. A part of me still cannot believe that I actually got in, while some other part thinks it is only reasonable given how much effort I put in for this. I also feel a bit of imposter syndrome, as there were a lot of good candidates for this year&amp;rsquo;s GSoC and I was the one selected among them. In any case, I am absolutely excited to spend my summer vacation writing code for a project as big and impactful as Git. I hope to learn a lot and come out as a better programmer at the end of this project.&lt;/p&gt;
+&lt;h2&gt;About the project&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;about-the-project&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#about-the-project&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The project that I&amp;rsquo;m going to work on is &amp;lsquo;&lt;em&gt;Move and improve reftable tests in the unit testing framework&lt;/em&gt;&amp;rsquo; and the proposal that got me selected can be found &lt;a href=&#34;https://summerofcode.withgoogle.com/media/user/32192b2dae2b/proposal/gAAAAABmNHGwi8ZcoSyHE608hOpvoYzWfP8Nb_XsaVZB1Cj31aLcgdAusbX0c0pvFEW48U1H-8TguJwj_qpBbiX4yMFl4bG70Yj9p8L8qTmSLjFs3k7G5N4=.pdf&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;. It is a large project and is expected to take around 350 hours to complete and my mentors for this project are Christian Couder (GitLab) and Patrick Steinhardt (GitLab). To give a synopsis of the proposal, my task for this internship is to move the parts of Git&amp;rsquo;s unit tests that exercise Git&amp;rsquo;s reftable backend from the current &amp;lsquo;.c files + shell scripts&amp;rsquo; setup to a new unit testing framework written entirely in C and then improve upon &amp;amp; extend those tests.&lt;/p&gt;
+&lt;p&gt;I already have some experience with porting tests to the new unit testing framework from the patches I worked on pre-GSoC where I tinkered with the reftable tests as well, so the work required in actually porting the tests is trivial compared to the improvements part. To make meaningful improvements to the reftable tests, I need to gain a substantial understanding of Git&amp;rsquo;s reftable backend, which is something entirely new to me. Among all of my merged patches on Git&amp;rsquo;s mailing list pre-GSoC, none were related to reftable or in it&amp;rsquo;s vicinity, so this is an entirely uncharted territory for me. Nonetheless, I believe I can go past these challenges and make this project successful.&lt;/p&gt;
+&lt;h2&gt;Goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The time period from May 1 to May 26 in GSoC is the &amp;lsquo;Community bonding period&amp;rsquo;. During this time, GSoC contributors are expected to read up documentation, get familiar with the codebase and tools, set up expectations and milestones, start engaging with the community, complete the required paperwork and so forth. In my GSoC proposal, I outlined this time period to learn in-depth about reftable and contribute a few patches towards that goal. Keeping this in mind, here&amp;rsquo;s a list of my goals for what&amp;rsquo;s left of this week and the following one:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Finish setting up this blog.&lt;/li&gt;
+&lt;li&gt;Go through Git&amp;rsquo;s &lt;a href=&#34;https://github.com/git/git/blob/master/Documentation/CodingGuidelines&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coding Guidlines&lt;/a&gt; again to better understand the coding style errors that I need to be on the lookout for.&lt;/li&gt;
+&lt;li&gt;Go through Pro Git book&amp;rsquo;s &lt;a href=&#34;https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;lsquo;Git Internals&amp;rsquo; chapter&lt;/a&gt; to re-familiarize myself with Git objects and references which reftable deals with.&lt;/li&gt;
+&lt;li&gt;Finish reading up the &lt;a href=&#34;https://git-scm.com/docs/reftable&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;reftable documentation&lt;/a&gt;. (This might take some time because the document is technically dense so there is a lot to uncover).&lt;/li&gt;
+&lt;li&gt;Find some suitable starting patches in the reftable sub-project.&lt;/li&gt;
+&lt;li&gt;Finish setting up a Payoneer account.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,128 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chandra Pratap – Blog Archive</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Blog Archive on Chandra Pratap</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 22 Mar 2026 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>KittenCast: A local, lightweight document to audiobook compiler</title>
+      <link>http://localhost:1313/posts/2026-03-22-kittencast-a-local-lightweight-document-to-audiobook-compiler/</link>
+      <pubDate>Sun, 22 Mar 2026 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/2026-03-22-kittencast-a-local-lightweight-document-to-audiobook-compiler/</guid>
+      <description>
+        
+        
+        &lt;h3&gt;&lt;strong&gt;KittenCast: A local, lightweight document-to-audiobook compiler&lt;/strong&gt;&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;kittencast-a-local-lightweight-document-to-audiobook-compiler&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#kittencast-a-local-lightweight-document-to-audiobook-compiler&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I’m excited to share a project I’ve been working on: &lt;a href=&#34;https://github.com/Chand-ra/KittenCast&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;KittenCast&lt;/a&gt;, a lightweight CLI tool that converts EPUBs, PDFs, Word docs, and plain text files into audiobooks.&lt;/p&gt;
+&lt;p&gt;The core requirement was strict: &lt;strong&gt;100% local operation.&lt;/strong&gt; No data leaks to cloud APIs, no unexpected usage costs: just your personal library and your CPU.&lt;/p&gt;
+&lt;h3&gt;Why I Built It&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;why-i-built-it&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#why-i-built-it&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;There are plenty of cloud-based TTS APIs, but for long-form content like books, they become incredibly expensive. Furthermore, many readers prioritize privacy for their personal document libraries.&lt;/p&gt;
+&lt;p&gt;I chose to build this around &lt;a href=&#34;https://github.com/KittenML/KittenTTS&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;KittenTTS&lt;/strong&gt;&lt;/a&gt; because it offers an incredible balance of quality and efficiency. When the entire synthesis model fits in under 25MB (Nano model), true decentralized audiobook creation becomes viable on standard hardware.&lt;/p&gt;
+&lt;h3&gt;How It Works&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;how-it-works&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#how-it-works&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The architecture is designed to be modular and resilient:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Format Extraction (&lt;code&gt;EbookLib&lt;/code&gt;, &lt;code&gt;pypdf&lt;/code&gt;, &lt;code&gt;python-docx&lt;/code&gt;):&lt;/strong&gt; The tool automatically routes files based on extension to the correct parsing logic.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Intelligent Sentence Tokenization (NLTK):&lt;/strong&gt; TTS models have limited context windows and struggle with very long strings. Instead of naive cutting (which chops words in half), I integrated NLTK’s &lt;code&gt;sent_tokenize&lt;/code&gt; to split the text logically at sentence boundaries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Synthesis (KittenTTS):&lt;/strong&gt; These safe chunks are fed sequentially to the model, generating audio arrays for each.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assembly (&lt;code&gt;NumPy&lt;/code&gt;, &lt;code&gt;Soundfile&lt;/code&gt;):&lt;/strong&gt; We concatenate the resulting arrays, injecting calculated 0.4-second silences between sentence chunks to create natural-sounding pacing and breaks.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Features&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;features&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#features&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;I focused on making this a tool someone would actually want to use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CLI First:&lt;/strong&gt; Full support for argument parsing (voices, model sizes, output paths).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Progress Tracking:&lt;/strong&gt; Integrated &lt;code&gt;tqdm&lt;/code&gt; progress bars for granular synthesis tracking.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Diagnostic Text Dumping:&lt;/strong&gt; Use the &lt;code&gt;--dump-text&lt;/code&gt; flag to save the &lt;em&gt;extracted&lt;/em&gt; text &lt;em&gt;before&lt;/em&gt; synthesis. This is crucial for verifying if a glitch is an extraction issue or a model issue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Performance Profiling: Speed and Resource Efficiency&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;performance-profiling-speed-and-resource-efficiency&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#performance-profiling-speed-and-resource-efficiency&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Before diving into the qualitative analysis, I profiled the three KittenTTS models to see how they actually handle resource allocation during local inference.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Model Size&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Init Time&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Model RAM&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Peak RAM&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Inference Time&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;RTF (Lower is better)&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;nano&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;6.37s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;88.1 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;142.2 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;1.48s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0.078x&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;micro&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;7.83s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;90.6 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;145.8 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;6.18s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0.306x&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;mini&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;8.54s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;99.9 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;206.9 MB&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;10.84s&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0.630x&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The efficiency here is fantastic. Even the highest-fidelity &lt;code&gt;mini&lt;/code&gt; model peaks at just over 200 MB of RAM and maintains a Real-Time Factor (RTF) of 0.630x. The &lt;code&gt;nano&lt;/code&gt; model, however, is the clear winner for rapid CLI deployment, generating audio more than 10 times faster than real-time (0.078x) with a microscopic memory footprint.&lt;/p&gt;
+&lt;h3&gt;Model Analysis: Where KittenTTS Fails&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;model-analysis-where-kittentts-fails&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#model-analysis-where-kittentts-fails&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;This brings me to the core engineering analysis required for model improvement. While the speed and voice fidelity of the three KittenTTS models are impressive for their size, my tests revealed distinct edge cases in a production scenario.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(Note: The exact text snippets and documents used to isolate all of the following failure cases are available in the &lt;code&gt;tests/fixtures&lt;/code&gt; directory of the repository so you can easily reproduce them locally.)&lt;/em&gt;&lt;/p&gt;
+&lt;h4&gt;A. The Complex Formatting (pdf) Challenge&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;a-the-complex-formatting-pdf-challenge&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#a-the-complex-formatting-pdf-challenge&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Raw math notation or LaTeX (e.g., &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;E=mc^2)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.6833em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05764em;&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1.0641em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.8141em;&#34;&gt;&lt;span style=&#34;top:-3.063em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; is synthesized as absolute gibberish by the TTS engine. Even with a layout-aware parser, listening to a TTS read out raw equations character-by-character is a terrible user experience.&lt;/p&gt;
+&lt;h4&gt;B. Lexical Normalization &amp;amp; Symbolic Data&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;b-lexical-normalization--symbolic-data&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#b-lexical-normalization--symbolic-data&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The models misinterpret non-standard English formats.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Phone Numbers &amp;amp; Identifiers:&lt;/strong&gt; The model consistently attempts to read contiguous numerical blocks as standard integers. A phone number like &lt;code&gt;7782934627&lt;/code&gt; is synthesized as &amp;ldquo;seven billion, seven hundred eighty-two million&amp;hellip;&amp;rdquo;, rather than a sequence of discrete digits. It also stumbles on regional formatting like &lt;code&gt;+49 30 1234567&lt;/code&gt; or &lt;code&gt;(800) 555-1234&lt;/code&gt;, where parentheses and plus signs cause unnatural pauses or are ignored entirely.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Email Addresses:&lt;/strong&gt; Complex strings like &lt;code&gt;alex.jones_dev@demo.net&lt;/code&gt; expose the model&amp;rsquo;s inability to handle special characters gracefully. Underscores are entirely ignored, while dots are treated as full stops, causing unnatural pauses mid-address. Furthermore, numbers preceding domains (&lt;code&gt;chandrapratap376&lt;/code&gt;) are read as hundreds or thousands rather than individual characters, breaking the flow of contact information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Acronyms vs. Initialisms:&lt;/strong&gt; The model struggles to differentiate between acronyms read as words (like ZIP) and initialisms read as letters (like WHO or S.W.A.L.K.). It tends to default to phonetic pronunciation, resulting in &amp;ldquo;WHO&amp;rdquo; being read as the interrogative pronoun (&amp;ldquo;who&amp;rdquo;) rather than &amp;ldquo;W-H-O.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;C. Semantic Lookahead &amp;amp; Phonetic Mapping&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;c-semantic-lookahead--phonetic-mapping&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#c-semantic-lookahead--phonetic-mapping&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The models struggle when pronunciation requires deep contextual understanding.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Heteronyms (Context-Dependent Pronunciation):&lt;/strong&gt; The models fail on sentences like &lt;em&gt;&amp;ldquo;The nurse wound the bandage around the wound&amp;rdquo;&lt;/em&gt; or &lt;em&gt;&amp;ldquo;A single tear fell when she saw the tear in her dress.&amp;rdquo;&lt;/em&gt; Without sufficient lookahead, the most statistically common pronunciation for the spelling is applied, destroying the grammatical meaning of the sentence.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Loanwords &amp;amp; Irregular Orthography:&lt;/strong&gt; Words with non-English phonetic roots entirely break the G2P rules. Terms like &lt;em&gt;Chiaroscuro&lt;/em&gt;, &lt;em&gt;Synecdoche&lt;/em&gt;, &lt;em&gt;Bologna&lt;/em&gt;, &lt;em&gt;Victual&lt;/em&gt;, and &lt;em&gt;Boatswain&lt;/em&gt; are synthesized with brute-force phonetic English rules, rendering them completely unrecognizable.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;D. Prosody, Pacing, and Contextual Emotion&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;d-prosody-pacing-and-contextual-emotion&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#d-prosody-pacing-and-contextual-emotion&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;The models struggle to generate dynamic, human-like pacing when the text deviates from standard declarative prose.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Dialogue &amp;amp; Rapid Exchanges:&lt;/strong&gt; When fed complex dialogue (like excerpts from Oscar Wilde featuring rapid back-and-forths, internal quotes, em-dashes, and exclamations), the prosody flattens. The model does not modulate its pitch to differentiate between speakers, nor does it recognize the em-dash (&lt;code&gt;—&lt;/code&gt;) as a cue for a dramatic pause or interruption, leading to a robotic, run-on delivery of highly emotional text.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;The &amp;ldquo;Long Sentence&amp;rdquo; Exhaustion:&lt;/strong&gt; When presented with a 250+ word run-on sentence lacking standard punctuation boundaries (periods, commas, semicolons), the audio generation degrades. Because the NLTK chunker relies on punctuation to split inputs, massive unbroken text blocks force the model to hold too much in its context window. This results in unnatural mid-sentence pauses and incorrect pronunciations for otherwise common words (like &amp;ldquo;shadow&amp;rdquo;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;E. Multimodal &amp;amp; Multilingual Contamination&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;e-multimodal--multilingual-contamination&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#e-multimodal--multilingual-contamination&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;Real-world texts are rarely perfectly clean, single-language ASCII.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Emojis &amp;amp; Unicode Symbols:&lt;/strong&gt; In modern texts like travel itineraries, the inclusion of emojis (📅, ✈️, 🥂) causes unpredictable behavior. The underlying text normalizer attempts to read the literal alt-text descriptions (&amp;ldquo;smiling face with sunglasses&amp;rdquo;), which destroys the narrative immersion. Similarly, standard units are often misread. For instance, &lt;strong&gt;15°C&lt;/strong&gt; is pronounced literally as &amp;ldquo;fifteen degree see&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code-Switching &amp;amp; Non-Latin Scripts:&lt;/strong&gt; When encountering foreign phrases like &lt;em&gt;Chère Renée-Louise&lt;/em&gt;, &lt;em&gt;Amicalement&lt;/em&gt;, or Devanagari script, the models apply a heavy, broken English accent to the words, completely losing the intended phonetics.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Next Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;KittenCast is a powerful proof of concept for local audiobook generation. The next architectural pivot would be addressing the academic paper issue, likely building a pre-processing agent to &amp;ldquo;clean&amp;rdquo; raw math from text before synthesis.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;You can check out the repository and start building your own local audiobook library &lt;a href=&#34;https://github.com/Chand-ra/KittenCast&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Feedback, issues, and PRs are all very welcome!&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

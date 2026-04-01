@@ -1,0 +1,953 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chandra Pratap – Summer of Bitcoin 2025</title>
+    <link>http://localhost:1313/sob/</link>
+    <description>Recent content in Summer of Bitcoin 2025 on Chandra Pratap</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 17 Aug 2025 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/sob/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>SoB: Final Report</title>
+      <link>http://localhost:1313/sob/2025-08-17-sob-final-report/</link>
+      <pubDate>Sun, 17 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-08-17-sob-final-report/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Summer of Bitcoin &amp;lsquo;25: Final Report&lt;/h1&gt;&lt;p&gt;This report summarizes the work performed by me in my project, &lt;strong&gt;Improve the fuzz testing for Core Lightning&lt;/strong&gt;, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.&lt;/p&gt;
+&lt;h2&gt;Project summary&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;project-summary&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#project-summary&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Bitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.&lt;/p&gt;
+&lt;p&gt;Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN).&lt;/p&gt;
+&lt;p&gt;This effort not only expanded test coverage but also led to the discovery and disclosure of &lt;strong&gt;8 vulnerabilities&lt;/strong&gt;, including memory safety bugs and critical denial-of-service (DoS) vectors.&lt;/p&gt;
+&lt;h2&gt;Work done&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;work-done&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#work-done&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The work done throughout this project can be broadly classified into two categories: &lt;em&gt;improvements to the existing fuzz tests&lt;/em&gt; for Core Lightning and &lt;em&gt;adding new ones&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s also  investigating, disclosing, and fixing the vulnerabilities uncovered by these efforts, but that is detailed separately in the &lt;strong&gt;Outcomes Achieved&lt;/strong&gt; section.&lt;/p&gt;
+&lt;p&gt;The following is a list of all work performed, broken down by category. A few other targets were explored but ultimately deprioritized to focus on higher-impact areas.&lt;/p&gt;
+&lt;h3&gt;Improvements to existing tests&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;improvements-to-existing-tests&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#improvements-to-existing-tests&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8373&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-initial_channel&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8366&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-bolt11&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8311&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-bech32&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8301&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-bigsize&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8297&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-addr&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8397&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-close_tx&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8386&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-channel_id&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8183&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-base32-64&lt;/code&gt;&lt;/a&gt; (status: Merged)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8404&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-bolt12-invrequest-decode&lt;/code&gt;&lt;/a&gt; (status: Merged)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-hsm_encryption&lt;/code&gt; (status: not pushed upstream, locally complete and awaiting final review)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-bolt12-offer_decode&lt;/code&gt; (status: Not pushed upstream, locally complete and awaiting final review)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;New tests&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;new-tests&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#new-tests&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8437&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-full_channel&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8423&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-gossipd_connectd&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8437&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-open_channel&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8324&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-wireaddr&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8298&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-amount-arith&lt;/code&gt;&lt;/a&gt; (status: un-ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8390&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-codex32&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8385&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-init_received&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8312&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-funder-policy&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8304&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-error-warning&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8244&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-wire-closing_sig&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8216&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-wire-closing_complete&lt;/code&gt;&lt;/a&gt; (status: ACKed)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8185&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-hmac-sha256&lt;/code&gt;&lt;/a&gt; (status: Merged)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-handle_onion&lt;/code&gt; (status: Not pushed upstream, locally complete and awaiting final review)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-open_channel2&lt;/code&gt; (status: Not pushed upstream, pending feedback on related PRs)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-pong&lt;/code&gt; (status: Not pushed upstream, locally complete and awaiting final review)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-route-calc&lt;/code&gt; (status: Not pushed upstream, pending feedback on related PRs)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Besides adding and improving tests, I maintained a weekly blog of my SoB journey, starting with the initial onboarding and ending with week 13 of the contribution period, which can be found &lt;a href=&#34;https://chand-ra.github.io/&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Outcomes achieved&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;outcomes-achieved&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#outcomes-achieved&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The primary outcome of this project is the set of vulnerabilities discovered through the improvements made to the fuzzing suite. The increase in code-coverage, and hence the robustness of the codebase, is the secondary outcome.&lt;/p&gt;
+&lt;p&gt;The following is a comprehensive list of all confirmed vulnerabilities. A couple other potential issues were investigated but are not included, as they were ultimately determined to be non-issues or false positives.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;NaN&lt;/code&gt; bug in route calculation&lt;/strong&gt;: Due to the imprecision of CLN&amp;rsquo;s &lt;code&gt;fp16_t&lt;/code&gt; type, the route score for a node can be set to &lt;code&gt;NaN&lt;/code&gt; in some cases. This leads to a runtime error when CLN is compiled with UBSan. In production, this might prevent usable nodes from being included in the route calculations making the network inefficient. A fix has been devised &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8357&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Out-of-bounds bug in the address parser&lt;/strong&gt;: When parsing a valid &lt;code&gt;DNS&lt;/code&gt; name that is exactly 255 bytes long, the address parser tries to append a &lt;code&gt;NULL&lt;/code&gt; terminator at the end of a 255-bytes long buffer, causing a runtime error when compiled with UBSan. In production, the port for the address gets corrupted. A fix has been implemented &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8325&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Heap-buffer-overflow error in address formatter&lt;/strong&gt;: The address parser doesn&amp;rsquo;t correctly format a &lt;code&gt;DNS&lt;/code&gt; address that is exactly 255 bytes long, causing the corresponding address formatter to read out of bounds when trying to format this address. A deeper discussion of the issue is available &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8324#issuecomment-3127327957&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Scaling with invalid factors&lt;/strong&gt;: &lt;code&gt;amount_sat_scale()&lt;/code&gt; and &lt;code&gt;amount_msat_scale()&lt;/code&gt; are used in various balance calculations in CLN, but can produce bogus values when scaling parameter is &lt;code&gt;-NaN&lt;/code&gt; or negative. &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8306&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Here&lt;/a&gt; is a fix for the issue.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Dangling memory allocation in &lt;code&gt;daemon_conn&lt;/code&gt; allocator&lt;/strong&gt;: Use of incorrect context in &lt;code&gt;daemon_conn_new_()&lt;/code&gt; results in a dangling &lt;code&gt;daemon_conn&lt;/code&gt; object. A proposed fix exists &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8424&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DoS vulnerability due to assertion failure&lt;/strong&gt;: A specifically crafted message can cause an assertion failure and hence, a crash. Further details are withheld pending a coordinated release. The vulnerability has been disclosed to the Core Lightning maintainers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DoS vulnerability due to memory overflow&lt;/strong&gt;: A certain message can cause a node&amp;rsquo;s memory consumption to grow unbounded resulting in a resource exhaustion vulnerability. Further details are withheld pending a coordinated release. The vulnerability has been disclosed to the Core Lightning maintainers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;(Possible vulnerability) DoS vulnerability due to memory leak&lt;/strong&gt;: A specific message may trigger memleak in a node. More details are witheld due to uncertain severity and possible fatal nature of the vulnerability.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Future Work &amp;amp; Next Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;future-work--next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#future-work--next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;My highest priority is to address feedback on the following pull requests to get them to an approved (ACKed) state:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8373&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-initial_channel&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8437&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-full_channel&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8423&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-gossipd_connectd&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8437&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-open_channel&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8324&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-wireaddr&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8298&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;fuzz-amount-arith&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After that, I will push the following completed PR&amp;rsquo;s, which have not yet been sent upstream, for review:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fuzz-hsm_encryption&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-bolt12-offer_decode&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-handle_onion&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-open_channel2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-pong&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fuzz-route-calc&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally, the memleak vulnerability requires further investigation, which should be undertaken as soon as it becomes feasible.&lt;/p&gt;
+&lt;h2&gt;Closing thoughts&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;closing-thoughts&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#closing-thoughts&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Before this program, I had little experience with fuzz-testing, security, or Bitcoin development. Now, I feel confident in my ability to contribute to this influential open-source community. I also learned valuable time management skills that improved my work-life balance, making this experience far more enjoyable than my past internships.&lt;/p&gt;
+&lt;p&gt;My biggest challenge came towards the end of the program, when my academic and internship commitments began to collide. Navigating these overlapping commitments was a valuable learning experience. This journey also taught me that understanding the Lightning-Network (or Bitcoin, in general) is a monumental task. The best way to make progress is to learn actively on the job and ask for help when you&amp;rsquo;re stuck. Mentors are always more than happy to provide guidance.&lt;/p&gt;
+&lt;p&gt;Post SoB, my immediate priority is to see my remaining work through to completion until all tests are ACKed and merged. More importantly though, I’ll maintain my passion for open source and try to stay active in the Bitcoin community in any capacity I can. I’ll also try to be helpful to newcomers and help them ease their way into this wonderful community.&lt;/p&gt;
+&lt;p&gt;In closing, I want to say thank you to my mentor, Matt. Thank you to the Lightning Network community. And thank you, Summer of Bitcoin, for this incredible journey.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 12 and 13</title>
+      <link>http://localhost:1313/sob/2025-08-15-sob-week-12-and-13/</link>
+      <pubDate>Fri, 15 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-08-15-sob-week-12-and-13/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;For the last couple of weeks of Summer of Bitcoin, most of my time was spent on following up on received feedback and wrapping up the work that I&amp;rsquo;ve already performed. In addition, I also finally finished the security report for the gossip daemon memory bug.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Made the &lt;code&gt;open_channel2&lt;/code&gt; fuzzer stateful&lt;/strong&gt;: Although the &lt;code&gt;open_channel2&lt;/code&gt; fuzzer was already complete, I recently transformed it into a stateful fuzzer to better test the dual-funding protocol. This decision followed a discussion with Matt about the potential benefits of this approach, and since the fuzzer already covered the relevant code paths, it was a logical enhancement.&lt;/p&gt;
+&lt;p&gt;The work was more straightforward than I anticipated and is now finished. While these improvements did not uncover any new vulnerabilities, the updated fuzzer serves as a valuable regression test.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: Over the past two weeks, I&amp;rsquo;ve been addressing upstream feedback for several targets, including open_channel and wireaddr_internal. While I&amp;rsquo;m making steady progress, it&amp;rsquo;s unlikely I&amp;rsquo;ll be able to finalize all of this work before the official end of the internship. However, since the remaining tasks are straightforward, I&amp;rsquo;m confident that I can complete them alongside my academic schedule.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finished the &lt;code&gt;gossipd-connectd&lt;/code&gt; vulnerability investigation&lt;/strong&gt;: While determining the nature of this bug was quick, assessing its severity took a significant amount of time. I&amp;rsquo;m happy to report I&amp;rsquo;ve finally reached a conclusion on it.&lt;/p&gt;
+&lt;p&gt;My many attempts to generate a conclusive memory profile were unsuccessful. Just when I was about to give up, I developed a hypothesis based on a warning message that CLN generated when running my attack program. After I presented this theory to Matt and he confirmed it was most likely correct, I wrote a full report on the bug and sent it to the CLN security mailing list.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reached a conclusion on the &lt;code&gt;full-channel&lt;/code&gt; bug&lt;/strong&gt;: Before pushing this target upstream, I decided to investigate the crash to determine if it represented a real-world vulnerability.&lt;/p&gt;
+&lt;p&gt;After consulting some resources, I found that the bug occurred due to invalid splice amounts generated by the fuzzer. This scenario wouldn&amp;rsquo;t be possible in production because of existing safeguards against such invalid values. With this understanding, I reworked the target to bypass the crash and then pushed it upstream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reworked the &lt;code&gt;initial-channel&lt;/code&gt; target&lt;/strong&gt;: This fuzz target had been blocked by a persistent crash for the past three weeks. After consulting with Matt, we decided the best course of action was to remove the tests for the specific function that was causing the crash. I&amp;rsquo;ve implemented this change, and the target now runs successfully. The fix is available for review in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8373&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8373&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Future goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;future-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#future-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Today marks the official end of Summer of Bitcoin 2025. While the program is concluding, my work on the project is not. I&amp;rsquo;ve invested a great deal of time and effort into my contributions, and I&amp;rsquo;m committed to seeing them through to completion. I plan to continue working past the official end date until all of my changes are pushed upstream and in a mergeable state. With that being said, here&amp;rsquo;s what&amp;rsquo;s left to do in the project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Push the remaining targets upstream&lt;/strong&gt;: I have a local backlog of about 6-7 new and improved targets that I haven&amp;rsquo;t pushed upstream yet. Once the current number of pending upstream targets decreases, I&amp;rsquo;ll push this new batch. From there, they will go through the standard feedback and improvement cycle until they are also considered mergeable.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finish investigating any potential vulnerabilities&lt;/strong&gt;: A few of my upstream targets, like &lt;code&gt;full_channel&lt;/code&gt;, still fail when run on their corpus. Before I consider my work complete, I plan to thoroughly investigate these crashes and identify any underlying vulnerabilities.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Get the CI to pass on PRs&lt;/strong&gt;: I&amp;rsquo;ve noticed that Rusty prioritizes merging PRs with a passing CI, even when failures on other PRs are unrelated to the proposed changes. To help get my work merged, my plan for the upcoming days is to investigate these CI issues and resolve them on as many of my PRs as possible.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As I&amp;rsquo;ve noted over the past few weeks, my primary challenge has been balancing the internship with my academic workload. While I&amp;rsquo;ve managed my time by working on weekends, I&amp;rsquo;m disappointed that my productivity hasn&amp;rsquo;t matched the level it was during my vacation. I feel I could have contributed more under different circumstances. Despite this, I am fully committed to seeing my work through to completion. I hope my dedication to finishing the project will compensate for any reduced output over these last couple weeks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Today marks the final day of the 13th week and the official conclusion of the Summer of Bitcoin 2025 program. Over the past couple of weeks, I discovered and confirmed a second serious DoS attack vector. In total, my work during the internship has led to the discovery of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Two critical vulnerabilities.&lt;/li&gt;
+&lt;li&gt;Seven non-critical vulnerabilities, one of which is still under investigation and may be upgraded in severity.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When I began this internship, I wasn&amp;rsquo;t sure if I would be able to find even a single vulnerability. I&amp;rsquo;m proud of what I&amp;rsquo;ve achieved through a combination of discipline and invaluable guidance from Matt. While my work isn&amp;rsquo;t finished and I&amp;rsquo;m still on the hunt for another serious vulnerability, I feel nothing but gratitude. Thank you to Summer of Bitcoin, Matt, and everyone who helped me exceed my own expectations.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 11</title>
+      <link>http://localhost:1313/sob/2025-08-02-sob-week-11/</link>
+      <pubDate>Sat, 02 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-08-02-sob-week-11/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Most of my time this week was spent on determining the severity of the memory bug in the gossip daemon and following up on received feedback. In addition, I also finally started working on the fuzzer for &lt;code&gt;connectd-channeld&lt;/code&gt; interface.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Started work on the &lt;code&gt;channeld-connectd&lt;/code&gt; interface fuzzer&lt;/strong&gt;: The &lt;code&gt;peer_in()&lt;/code&gt; function in &lt;code&gt;channeld/channeld.c&lt;/code&gt; handles connectd messages like &lt;code&gt;UPDATE_ADD_HTLC&lt;/code&gt; and &lt;code&gt;REVOKE_AND_ACK&lt;/code&gt;. Due to its stateful design, creating a stateful fuzz test for it has been a long-term plan of mine. I finally began this week and have completed a substantial portion of the initial setup. As this is a complex target, it will require considerable time to reach a mergeable state, but the foundational work is now complete.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Started work on a &lt;code&gt;handle_commit_signed&lt;/code&gt; fuzzer&lt;/strong&gt;: Last week, while investigating a crash in the &lt;code&gt;initial_channel&lt;/code&gt; fuzzer, I traced its callers to &lt;code&gt;openingd/dualopend.c&lt;/code&gt;. To reproduce the bug from a higher level, this meant I needed to target a handler within that file.&lt;/p&gt;
+&lt;p&gt;I started by attempting to add a target for &lt;code&gt;handle_commit_signed()&lt;/code&gt; but soon realized that a simple fuzzer, like the one for &lt;code&gt;open_channel&lt;/code&gt; messages, would be insufficient for the task. I&amp;rsquo;ve paused work on this approach for now and plan to discuss a better strategy with Matt first.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: This week, I addressed upstream feedback for several targets, including &lt;code&gt;open_channel&lt;/code&gt; and &lt;code&gt;wireaddr_internal&lt;/code&gt;. While the work on these is not yet finished, I&amp;rsquo;m making steady progress toward completion. While working on the wireaddr_internal feedback, I discovered a new UBSan error in &lt;code&gt;parse_wireaddr()&lt;/code&gt;/&lt;code&gt;fmt_wireaddr()&lt;/code&gt;. I have discussed a potential fix with Matt, but the final solution is still under consideration.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mailed the vulnerability report&lt;/strong&gt;: When addressing feedback on the &lt;code&gt;fundee_channel&lt;/code&gt; target I had previously pushed upstream, I encountered a new input set that caused a crash in CLN. I informed Matt, and after his investigation, we confirmed that this was indeed a real vulnerability. Following that, the next step was to draft a report for the Core Lightning security mailing list. I wrote the draft report and sent it to Matt last week and got feedback on it, which I incorporated in the report and sent to CLN&amp;rsquo;s security mailing list this week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Created a program to trigger the &lt;code&gt;gossipd-connectd&lt;/code&gt; vulnerability&lt;/strong&gt;: This week, one of my goals was to assess the severity of a vulnerability I had discovered in CCAN&amp;rsquo;s integer map function, which was found by fuzzing the &lt;code&gt;gossipd-connectd&lt;/code&gt; interface. In my meeting with Matt on Monday, he concluded that the vulnerability was not severe. He explained that CLN nodes have a hard limit on the number of &lt;code&gt;channel_announcement&lt;/code&gt; messages they store, which would prevent memory usage from growing too large. Based on this feedback, I abandoned my plan to simulate an attack using that message type.&lt;/p&gt;
+&lt;p&gt;However, while improving the fuzz target, I encountered a separate memory leak triggered by sending &lt;code&gt;channel_update&lt;/code&gt; messages. Matt was initially skeptical that this was a serious issue, but I decided to investigate further. I modified an attack program he had previously given me, changing its payload to a flood of malicious &lt;code&gt;channel_update&lt;/code&gt; messages.&lt;/p&gt;
+&lt;p&gt;My hypothesis was correct. The program successfully triggered unbounded memory usage in both &lt;code&gt;connectd&lt;/code&gt; and &lt;code&gt;gossipd&lt;/code&gt;. This confirms a significant Denial of Service (DoS) vulnerability. Even if its root cause is different from what my fuzzer originally found, this investigation has uncovered a critical issue in the code.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finished revisiting targets&lt;/strong&gt;: I have finished revisiting my existing fuzz targets to increase their code coverage, and I believe they are all now in a mergeable state.&lt;/p&gt;
+&lt;p&gt;The final remaining task is to discuss the target for &lt;code&gt;gossmap_manage&lt;/code&gt; operations with Matt. We need to decide if this target is useful enough to improve, as there is already an existing fuzzer for the gossip daemon that covers these same operations. His feedback will determine whether I spend more time increasing this target&amp;rsquo;s coverage or not.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;A lot of the work that I plan to do next week depends on my next meeting with Matt, since there&amp;rsquo;s a lot of stuff to evaluate. With that being said, here are some of my immediate goals for the upcoming week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finish the target for &lt;code&gt;channeld-connectd&lt;/code&gt; interface&lt;/strong&gt;: I&amp;rsquo;ve laid the foundation for this new target and will continue working on it next week. However, I need to determine if this target is necessary at all, as its purpose may overlap with the &lt;code&gt;full-channel&lt;/code&gt; target I completed last week. That target already provides stateful testing for the HTLC state machine, which might make this new one redundant. While I aim to make progress, I first need to clarify if this work is worth pursuing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Try triggering the &lt;code&gt;initial_channel&lt;/code&gt; bug from the dual-channel handlers&lt;/strong&gt;: I have already attempted this by adding a new &lt;code&gt;commit_signed&lt;/code&gt; target to the fuzz suite. However, as I mentioned previously, I have paused my work on it for now. My plan is to first discuss a better approach with Matt. I now believe that the best solution, after all, would be to make the &lt;code&gt;open_channel2&lt;/code&gt; fuzzer stateful. I intend to re-examine that plan on Monday before speaking with him.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reach a conclusion on the &lt;code&gt;gossipd-connectd&lt;/code&gt; vulnerability&lt;/strong&gt;: I believe I&amp;rsquo;ve completed most of the work required on my end, and that we&amp;rsquo;re close to reaching a conclusion on the nature and severity of this bug. In his latest feedback, Matt asked me to further evaluate the attack program&amp;rsquo;s behavior and to generate a memory profile to identify the source of the issue. I was able to complete the first task, but I could not generate the memory profile. I will inform Matt of this and ask if he can handle that part of the plan.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reach a conclusion on the &lt;code&gt;full-channel&lt;/code&gt; bug&lt;/strong&gt;: I briefly discussed this target with Matt in our last meeting, but a verbal explanation was not enough for him to understand the situation due to its complexity. We decided to defer the discussion until I push the target upstream, which will allow him to review the code directly for a complete picture.&lt;/p&gt;
+&lt;p&gt;My original plan was to push the target this week. I couldn&amp;rsquo;t, however, because there is already a backlog of other targets upstream waiting for review. Given that little time is left in the project and I believe this issue is serious, I want to ensure we have ample time to discuss it. Therefore, I now plan to push this target upstream first thing on Monday to prioritize it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Rework the &lt;code&gt;wireaddr&lt;/code&gt; bug fix&lt;/strong&gt;: As I&amp;rsquo;ve mentioned, addressing the feedback on the &lt;code&gt;wireaddr_internal&lt;/code&gt; target led to the discovery of another bug in &lt;code&gt;fmt_wireaddr()&lt;/code&gt;. I have devised a minimal fix that handles both of these issues and have communicated it to Matt. I am now waiting for his approval to incorporate this solution into the fix that has already been pushed upstream.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As I mentioned last week, my primary challenge is balancing my internship responsibilities with my academic workload. I&amp;rsquo;ve been managing my time by working one day over the weekend, but I feel that my productivity during these hours isn&amp;rsquo;t as high as it was during my vacation. This is likely because it was the first week of the new semester, and the adjustment has been significant. With the internship nearing its end, this is a concern for me. However, instead of dwelling on the past week, my focus is now on adapting more effectively and improving my productivity in the week ahead.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Today marks the end of my 11th week, with only two weeks remaining in the internship. I&amp;rsquo;m thrilled about finding a serious DoS vector in the codebase and am hopeful that the potential vulnerability in the gossip state machine proves to be significant as well. Discovering one more serious issue, for a total of three, would be a very satisfying outcome for my internship to me. With the limited time left, my strategy is to focus on reaching conclusions on the potential bugs I&amp;rsquo;ve already found, rather than pursuing new targets.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 10</title>
+      <link>http://localhost:1313/sob/2025-07-27-sob-week-10/</link>
+      <pubDate>Sun, 27 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-07-27-sob-week-10/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Most of my time this week was spent on writing a new fuzzer for &lt;code&gt;channeld/full_channel.{c, h}&lt;/code&gt; operations and following up on received feedback. In addition, I also wrote a report for a DoS attack vector that one of my fuzzers uncovered.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Updated Matt on the &lt;code&gt;gossipd-connectd&lt;/code&gt; target&lt;/strong&gt;: Since the &lt;code&gt;gossipd–connectd&lt;/code&gt; fuzz target was already substantially developed and even uncovered a vulnerability, I believed it was a good time to get Matt involved for feedback. I pushed the target upstream early this week but didn&amp;rsquo;t receive any feedback till now. I&amp;rsquo;ll wait for his reponse in the next week and if I don&amp;rsquo;t hear anything back, I will remind him of this target.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the &lt;code&gt;codex32&lt;/code&gt; target&lt;/strong&gt;: I received extensive feedback on the &lt;code&gt;codex32&lt;/code&gt; target that I pushed upstream last week, which led to a significant amount of rework. I had to make several modifications to get the target into a more acceptable state, and the feedback–improvement loop continued right up to the end of the week. I&amp;rsquo;m happy to report that the target has finally received an ACK from Matt and is in a mergeable state now.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: Other than the feedback on the &lt;code&gt;codex32&lt;/code&gt; target, I also received substantial feedback on some other targets that I had pushed upstream, like the &lt;code&gt;amount-arith&lt;/code&gt; target that I pushed upstream last week. This required a number of changes since the target was really subpar but I don&amp;rsquo;t think the work is finished as of yet. I believe Matt has already provided me feedback on the latest push, which I plan to address in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Wrote a vulnerability report&lt;/strong&gt;: When addressing feedback on the fundee_channel target I had previously pushed upstream, I encountered a new input set that caused a crash in CLN. I informed Matt, and after his investigation, we confirmed that this was indeed a real vulnerability. Interestingly, the crash would occur higher up the call stack (in the HSMD) rather than within the target function itself.&lt;/p&gt;
+&lt;p&gt;Following that, the next step was to draft a report for the Core Lightning security mailing list. To do so, I had to set up and run the attack program Matt used to trigger the vulnerability. That took a bit of effort, but I’ve now completed it and sent the draft report to Matt for review. Once I hear back from him, I’ll move forward with sending the final report to the mailing list.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Worked on a stateful &lt;code&gt;full-channel&lt;/code&gt; fuzzer&lt;/strong&gt;: I started work on a &lt;code&gt;commit_tx()&lt;/code&gt; fuzzer towards the end of last week and made some initial progress. However, I later concluded that the value it would provide didn’t justify the effort required. Instead of dropping the work altogether, I repurposed it into a stateful fuzzer for &lt;code&gt;channeld/full_channel.{c, h}&lt;/code&gt; operations, which seemed like a more promising direction.&lt;/p&gt;
+&lt;p&gt;Fortunately, there was already a unit test for &lt;code&gt;full-channel&lt;/code&gt; operations that I could draw from, which helped me finish the work on this new target relatively quickly. However, the fuzzer currently crashes, and from my investigation, it looks like it could be due to a bug in the HTLC state machine. Before proceeding further, I’ll check in with Matt to confirm whether this is an actual bug or an expected behavior. Once I have clarity, I’ll decide on the next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisited the &lt;code&gt;initial_channel&lt;/code&gt; fuzzer&lt;/strong&gt;: After Matt helped me pinpoint the cause of the crash in this target—unrealistically low dust_limit values—I implemented a fix for that. But instead of resolving the issue, it led to yet another crash. I brought this back to Matt, and this time it appeared to stem from another unrealistic channel parameter. I adjusted that too, but it just resulted in another different crash.&lt;/p&gt;
+&lt;p&gt;At this point, it&amp;rsquo;s clear that continuing to patch over individual parameter issues in isolation isn&amp;rsquo;t the best use of time. Instead, I think the most productive next step is to attempt triggering this crash from a higher-level operation within the dual-funding protocol, or so does Matt believe.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisited the &lt;code&gt;open_channel2&lt;/code&gt; fuzzer&lt;/strong&gt;: One of my goals last week was to make the &lt;code&gt;open_channel2&lt;/code&gt; fuzzer stateful at the moment when our simulated peer receives a message from another peer. I did implement changes that allow us to simulate more arbitrary incoming messages—rather than just a single, well-formed type—but converting the entire fuzzer to a fully stateful model would require significantly more time, and I don’t believe it’s justified. I’ve decided not to modify the fuzzer further for now. If Matt requests additional work, I’ll revisit it, but I feel this target is sufficiently thorough at present.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are still quite some targets that I haven&amp;rsquo;t received the feedback for just yet, or have received the feedback but haven&amp;rsquo;t addressed yet. They are on the topmost of my priority list for the next week but other than those, here are some of my immediate goals:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a target for &lt;code&gt;channeld-connectd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;peer_in()&lt;/code&gt; in &lt;code&gt;channeld/channeld.c&lt;/code&gt; is responsible for handling connectd messages such as &lt;code&gt;UPDATE_ADD_HTLC&lt;/code&gt; and &lt;code&gt;REVOKE_AND_ACK&lt;/code&gt;. Given its stateful structure, I have planned to add a stateful fuzz test simulating this function for quite some time now but couldn&amp;rsquo;t find the time to do it, so I plan on finally tackling this in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Try triggering the &lt;code&gt;initial_channel&lt;/code&gt; bug from the dual-channel handlers&lt;/strong&gt;: I traced the callers of the function that triggers the crash in the &lt;code&gt;initial_channel&lt;/code&gt; fuzzer and found that they all live in &lt;code&gt;openingd/dualopend.c&lt;/code&gt;. This means that, to reproduce the bug from a higher level, I’ll need to target one of the handlers in that file. I’ll attempt this in the coming week, and if it doesn’t yield results, I’ll reach out to Matt for assistance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Determine the severity of the &lt;code&gt;gossipd-connectd&lt;/code&gt; vulnerability&lt;/strong&gt;: It’s already confirmed that the vulnerability I discovered in CCAN’s integer map function—exposed by fuzzing the &lt;code&gt;gossipd‑connectd&lt;/code&gt; interface—is genuine and requires a fix. However, Matt prefers that we assess its severity before notifying the Core Lightning team. To do this, I’ll adapt Matt’s attack program to send the specific gossip messages that trigger the crash instead of &lt;code&gt;open_channel&lt;/code&gt; messages. Since the target is written in Go, I’ll need some assistance, but I believe this approach is the most effective way to gauge the crash’s impact. I’ll begin work on this in the coming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reach a conclusion on the &lt;code&gt;full-channel&lt;/code&gt; bug&lt;/strong&gt;:  I’ve added the &lt;code&gt;full-channel&lt;/code&gt; target, which appears to have uncovered a potential vulnerability in the HTLC state machine. I’m not yet certain whether this is a genuine bug or merely the result of an impossible value. I plan to discuss it with Matt in our meeting next week and, hopefully, reach a conclusion.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisit the finished targets&lt;/strong&gt;: I’ve already reviewed most of the targets I worked on; only the gossmap_manage target—and possibly one or two I may have overlooked—remains. I plan to revisit these in the coming week and wrap up this task for good.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finish the work on the vulnerability report&lt;/strong&gt;: I’ve already sent Matt the draft report and received his feedback. I didn’t have time to address his comments this week, but I plan to do so and finalize sending the report to the CLN team early next week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;With the internship drawing to a close, my academic responsibilities are beginning to demand more of my time. I must report to my college at the start of next week, yet there are still a couple of weeks left in the internship—and I’m not yet at a point where I can begin to wrap things up work‑wise. My only option is to balance my coursework with my internship duties. I’ve already invested significant effort in this project, so it will take priority if a conflict arises. However, these are my final years of college, and I can’t afford an academic setback now. Maintaining both the quality of my work and my grades will require effort, but I’ve managed similar challenges before—and the fact that this is only temporary gives me confidence. I’m committed to giving both my best and optimistic about the outcome.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Today marks the end of the 10th week of my internship. I’m thrilled to have finally uncovered a serious vulnerability in the CLN codebase, and I’m equally grateful to Matt—none of this would have been possible without his guidance. Although I had hoped to add more targets to this project, with the finish line now in sight, I’ll scale back my ambitions. My plan is to first reach definitive conclusions on the potential bugs already identified before pursuing any new targets. That seems like the best course of action for now, and I remain hopeful that I can still uncover a few more significant vectors.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 9</title>
+      <link>http://localhost:1313/sob/2025-07-19-sob-week-9/</link>
+      <pubDate>Sat, 19 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-07-19-sob-week-9/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Most of my time this week was spent optimizing the &lt;code&gt;gossipd-connectd&lt;/code&gt; fuzzer and following up on received feedback. In addition, I also explored a few new fuzz target ideas.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Improved the &lt;code&gt;gossipd-connectd&lt;/code&gt; test&lt;/strong&gt;: As part of my ongoing effort to revisit and improve existing fuzz targets, I chose to start with the &lt;code&gt;gossipd-connectd&lt;/code&gt; interface fuzzer, since it&amp;rsquo;s the first inter-daemon fuzz target I developed. Although it took considerable time to get this target to a meaningful coverage level, I believe the effort has paid off—it has already uncovered a memory leak that appears to be a genuine bug. I plan to report this to Matt early next week.&lt;/p&gt;
+&lt;p&gt;That said, the work on this target isn’t fully complete yet. I’m currently unsure about the correct sequence of messages that should be parsed by the receiving peer (in this case, us). I plan to consult Matt on this point and rework the target accordingly. I&amp;rsquo;m optimistic that this will further increase the coverage and potentially help surface more vulnerabilities.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the &lt;code&gt;codex32&lt;/code&gt; target&lt;/strong&gt;: I received extensive feedback on the &lt;code&gt;codex32&lt;/code&gt; target that I pushed upstream last week, which led to a significant amount of rework. I had to make several modifications to get the target into a more acceptable state, and the feedback–improvement loop continued right up to the end of the week. I&amp;rsquo;ve just pushed the latest set of changes upstream, and I believe the target is now nearly finalized.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: Other than the feedback on the &lt;code&gt;codex32&lt;/code&gt; target, I also received substantial feedback on the &lt;code&gt;tlv_invoice_request&lt;/code&gt; target that I pushed upstream last week. This required a number of changes, and I had to ensure that the improvements I made were also reflected in the related target, &lt;code&gt;fuzz-wire-offer-decode&lt;/code&gt;, which I modeled after it. I wrapped up the work on both targets and, following Matt&amp;rsquo;s last feedback, optimized the corpus at the end of the week. With that, I believe the work for this target is now complete.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Started working on &lt;code&gt;commit_tx&lt;/code&gt; fuzzer&lt;/strong&gt;: &lt;code&gt;commit_tx()&lt;/code&gt; in &lt;code&gt;channeld/commit_tx.{c, h}&lt;/code&gt; is responsible for creating (unsigned) commitment transactions that spend the funding transaction output. Since there&amp;rsquo;s already an existing unit test for this function, I decided it would be worthwhile to convert that test into a fuzz target. I began working on this towards the end of the week, and the target is nearly complete, with only a few remaining bugs to address. I plan to wrap up the work on this target in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a target for &lt;code&gt;channeld-connectd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;peer_in()&lt;/code&gt; in &lt;code&gt;channeld/channeld.c&lt;/code&gt; is responsible for handling connectd messages such as &lt;code&gt;UPDATE_ADD_HTLC&lt;/code&gt; and &lt;code&gt;REVOKE_AND_ACK&lt;/code&gt;. Given its stateful structure, I planned to add a stateful fuzz test simulating this function in this week but couldn&amp;rsquo;t find the time to do it, so I plan on tackling this in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Address the feedback on the &lt;code&gt;opem_channel&lt;/code&gt; fuzzer&lt;/strong&gt;: I pushed the working version of the &lt;code&gt;open_channel&lt;/code&gt; fuzzer upstream last week, and while it &lt;em&gt;did&lt;/em&gt; succeed in reproducing the crash I was targeting, Matt&amp;rsquo;s feedback revealed that the bug was only triggered because &lt;code&gt;developer_options&lt;/code&gt; were enabled in the fuzz target. Since the goal of fuzzing is to uncover bugs in production code paths, using developer-only code paths isn&amp;rsquo;t ideal. I also received some additional feedback toward the end of the week, which I plan to address in the upcoming one.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisit the &lt;code&gt;initial_channel&lt;/code&gt; fuzzer&lt;/strong&gt;: Since it&amp;rsquo;s now clear that the assertion failure in this target occurs due to a code path enabled by &lt;code&gt;developer_options&lt;/code&gt;, I plan to revisit the target and disable those options to see if that resolves the issue. If the test continues to function correctly with &lt;code&gt;developer_options&lt;/code&gt; turned off and no further issues arise, then the target should be in a mergeable state.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Make the &lt;code&gt;opem_channel2&lt;/code&gt; fuzzer stateful&lt;/strong&gt;:  had completed the work on this target in one of the previous weeks, but there&amp;rsquo;s potential to make it stateful, which I believe is worth pursuing. The statefulness arises from its interaction with the peer, and if a vulnerability can be triggered through such interactions, it would directly indicate a critical issue. Given the implications, I think it&amp;rsquo;s well worth revisiting this target and investing the extra time to rework it into a stateful fuzzer.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisit the finished targets&lt;/strong&gt;: The plan to revisit and enhance my newer fuzz targets to improve coverage is well underway, and I intend to continue this effort into the upcoming week. The goal is to ensure each target explores as much of its respective code path as possible, especially for complex or security-critical components.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Update Matt on the &lt;code&gt;gossipd-connectd&lt;/code&gt; target&lt;/strong&gt;: Since the &lt;code&gt;gossipd–connectd&lt;/code&gt; fuzz target is already substantially developed and has even uncovered a vulnerability, I believe this is a good time to get Matt involved for feedback. His insights could help validate the approach and suggest refinements early on. Given that I plan to follow a similar structure for the upcoming &lt;code&gt;channeld–connectd&lt;/code&gt; target, getting his input now would also help avoid repeating any design or implementation missteps in the new target.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The gossipd-connectd fuzzer ended up taking significantly more time than I initially anticipated, but in hindsight, the effort was well worth it—it successfully uncovered an actual vulnerability. Beyond the bug discovery, the experience of working through the entire setup and debugging process was extremely valuable. I now have a much clearer understanding of what kind of timeframe to expect when developing similar inter-daemon fuzzers and how to efficiently handle the technical challenges involved.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Week 9 of SoB wraps up with the midterm evaluation results finally coming in—and I’m happy to report that I passed! Along with the results came 40% of the stipend, plus instructions on how to claim the swag and the hardware wallet that’s part of the program.&lt;/p&gt;
+&lt;p&gt;It felt great to see some tangible rewards for the work I’ve put in over the past few months. But with a bit of introspection, I’ve come to realize that the experience and learning I’m taking away from this project will probably outweigh the value of any stipend or swag. This has genuinely been the most fun and fulfilling internship experience I’ve had so far.&lt;/p&gt;
+&lt;p&gt;That said, there are still a few more weeks to go, and the work is far from over. I’m as motivated as ever to keep pushing forward and uncover as many vulnerabilities as I can before the project concludes.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 8</title>
+      <link>http://localhost:1313/sob/2025-07-12-sob-week-8/</link>
+      <pubDate>Sat, 12 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-07-12-sob-week-8/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Most of my time this week was spent optimizing the &lt;code&gt;open_channel&lt;/code&gt; fuzzer and following up on received feedback. In addition, I also explored a few new fuzz target ideas.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reworked the &lt;code&gt;tlv_invoice_request&lt;/code&gt; target&lt;/strong&gt;: I received feedback on the &lt;code&gt;tlv_invoice_request&lt;/code&gt; wire fuzzer that I pushed earlier this week, and it turned out that the functions I was trying to fuzz are already tested at a higher level by the existing &lt;code&gt;fuzz-bolt12-invrequest-decode&lt;/code&gt; test. Instead of discarding the new target and the work I had put into it, I decided to rework it as an improvement to the existing test. The rework is now complete, and the resulting PR is &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8404&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;#8485&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reworked the &lt;code&gt;tlv_offer&lt;/code&gt; target&lt;/strong&gt;: I’d already created a fuzz test for &lt;code&gt;tlv_offer&lt;/code&gt;, but I later realized that its marshalling and unmarshalling functions are already covered by the existing &lt;code&gt;fuzz-bolt12-offer&lt;/code&gt; test. Following the same approach as with the &lt;code&gt;tlv_invoice_request&lt;/code&gt; fuzzer, I reworked my new test into an enhancement for that existing target. The work is now complete, and I’ll push the improvements upstream shortly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reworked the &lt;code&gt;parse_onion_message&lt;/code&gt; target&lt;/strong&gt;: One of my main goals for the week was to revisit and improve the fuzz targets I had already written, focusing on increasing their code coverage to a satisfactory level. I started with the &lt;code&gt;parse_onion_message&lt;/code&gt; target. Instead of fuzzing the core &lt;code&gt;parse_onion_message()&lt;/code&gt; function in &lt;code&gt;common/parse_onion_message.c&lt;/code&gt; directly, I restructured the target so that the fuzzer&amp;rsquo;s entry point is the actual handler for onion messages from peers- &lt;code&gt;handle_onion()&lt;/code&gt; in &lt;code&gt;connectd/onion_message.c&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Rewriting the target took about a day, but the result is a much more realistic and comprehensive test that exercises the full path down to &lt;code&gt;parse_onion_message()&lt;/code&gt;. The target works well and I plan to push it upstream in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: I received feedback on some of the fuzz targets I had previously pushed upstream, including the one for &lt;code&gt;codex32&lt;/code&gt; operations. A good portion of my time this week was spent addressing that feedback and making the necessary changes. I&amp;rsquo;ll continue monitoring for any further suggestions, but for now, the updates have been implemented and I&amp;rsquo;m ready to move forward with the remaining work.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Improved the &lt;code&gt;open_channel&lt;/code&gt; target&lt;/strong&gt;: In my efforts to trigger the bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;, I focused on improving the fuzz target for &lt;code&gt;fundee_channel()&lt;/code&gt;, which processes incoming &lt;code&gt;open_channel&lt;/code&gt; messages from peers. While I had started this work last week, it turned out to be much more involved than anticipated and extended into this week as well. I&amp;rsquo;m happy to report that the effort paid off, the improved target successfully triggers the bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This likely indicates a serious DoS vulnerability, although I’ll need further confirmation to be certain. I&amp;rsquo;ve already notified Matt about the finding and pushed the new &lt;code&gt;open_channel&lt;/code&gt; target along with the crashing input upstream in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8411&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8411&lt;/a&gt;. The next steps now depend on his assessment.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a target for &lt;code&gt;channeld-connectd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;peer_in()&lt;/code&gt; in &lt;code&gt;channeld/channeld.c&lt;/code&gt; is responsible for handling connectd messages such as &lt;code&gt;UPDATE_ADD_HTLC&lt;/code&gt; and &lt;code&gt;REVOKE_AND_ACK&lt;/code&gt;. Given its stateful structure, I planned to add a stateful fuzz test simulating this function in this week but couldn&amp;rsquo;t find the time to do it, so I plan on tackling this in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisit the finished targets&lt;/strong&gt;: I planned on revisiting some of my complex targets to ensure they exercise their code paths more effectively, and I&amp;rsquo;ve started implementing the plan with the &lt;code&gt;onion_message_parse&lt;/code&gt; fuzzer, but there&amp;rsquo;s still a lot of targets left, so I plan on doing the same for them in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Possibly complete the target for &lt;code&gt;channeld-lightningd&lt;/code&gt; interface&lt;/strong&gt;: I had already completed the initial work for this target, but after my last discussion with Matt, I realized that the &lt;code&gt;lightningd&lt;/code&gt; interfaces aren&amp;rsquo;t particularly valuable fuzzing targets, as they generally don&amp;rsquo;t handle untrusted input directly. That said, since I’ve already invested time into developing this fuzzer, I’d still like to wrap it up quickly if I get the opportunity, rather than letting the work go to waste.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The open_channel target ended up taking significantly more time than I had anticipated—roughly two full days. While I’m glad I was ultimately able to achieve the depth I was aiming for with this target, this experience reinforced something I noted in last week&amp;rsquo;s &lt;strong&gt;Challenges&lt;/strong&gt; section: pushing fuzzers to reach meaningful depth tends to be a time-intensive process. With that in mind, I’ll need to be more selective moving forward and prioritize targets where I believe the investment is most likely to yield impactful results.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Week 8 of SoB wraps up this week, with midterm evaluation results expected at the start of the next. I&amp;rsquo;m fairly confident about passing, though of course, there’s always a bit of uncertainty until it&amp;rsquo;s official.&lt;/p&gt;
+&lt;p&gt;This week, I had to allocate some time to prepare for my upcoming semester, which meant slightly less time for SoB work during weekdays. That said, I made sure to catch up over the weekend to stay on track. Looking ahead, I expect academic responsibilities to take up more of my time, so my goal is to get as much meaningful work done as possible before the semester fully kicks in.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 7</title>
+      <link>http://localhost:1313/sob/2025-07-05-sob-week-7/</link>
+      <pubDate>Sat, 05 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-07-05-sob-week-7/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I worked on the goals I outlined last week. Other than that, most of my time was devoted to reviewing potential bugs, writing new tests and improving the old ones.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reported to Matt about the potential bug in &lt;code&gt;gossmap_manage&lt;/code&gt;&lt;/strong&gt;: I brought up the issue with Matt during our Monday meeting, and he had a few suggestions for resolving it. However, even before trying those out, a closer look at the target revealed the root cause: I wasn’t handling cleanup properly in cases of early return. Fixing that resolved most of the allocation errors in the target.&lt;/p&gt;
+&lt;p&gt;Additionally, while investigating the memory leak, I discovered an instance of dangling allocation in the code. I confirmed with Matt that this is indeed an actual issue, and I plan to push a fix for it later.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the &lt;code&gt;route-calc&lt;/code&gt; target&lt;/strong&gt;: While preparing to push the &lt;code&gt;route-calc&lt;/code&gt; target upstream, I worked on developing a corpus for the test. However, during fuzzing, one of the oracles in my target started failing—specifically, a check like &lt;code&gt;assert(hop-&amp;gt;amount &amp;gt;= channel_htlc_min)&lt;/code&gt; was triggered when &lt;code&gt;hop-&amp;gt;amount was 0&lt;/code&gt;. I spent a considerable amount of time writing a unit test to simulate this error and managed to reproduce it successfully.&lt;/p&gt;
+&lt;p&gt;Later, I discovered that this behavior is actually intentional: the route calculation is designed to ignore a channel’s &lt;code&gt;htlc_min&lt;/code&gt; constraint when &lt;code&gt;hop-&amp;gt;amount&lt;/code&gt; is 0. As a result, I updated the target to skip this assertion in such cases. With that fix in place, the target no longer fails.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: I received some feedback on my previous PRs this week, like the fuzz target for &lt;code&gt;peer_init_received()&lt;/code&gt;, and a portion of my time was spent addressing that feedback.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;channeld-lightningd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;req_in()&lt;/code&gt; in &lt;code&gt;channeld/channeld.c&lt;/code&gt; is responsible for handling messages that &lt;code&gt;channeld&lt;/code&gt; receives from &lt;code&gt;lightningd&lt;/code&gt;. Since this function follows a stateful structure, I created a stateful fuzzer to simulate its behavior—effectively simulating messages from &lt;code&gt;lightningd&lt;/code&gt; to &lt;code&gt;channeld&lt;/code&gt;. The work on this target is still in progress, and I plan to complete it in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;connectd-lightningd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;recv_req()&lt;/code&gt; in &lt;code&gt;connectd/connectd.c&lt;/code&gt; is responsible for handling messages that &lt;code&gt;connectd&lt;/code&gt; receives from &lt;code&gt;lightningd&lt;/code&gt;. Since this function also follows a stateful structure, I created a stateful fuzzer to simulate its behavior—effectively simulating messages from &lt;code&gt;lightningd&lt;/code&gt; to &lt;code&gt;connectd&lt;/code&gt;. The work on this target is complete, and I plan to push the change in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;codex32&lt;/code&gt; operations&lt;/strong&gt;: &lt;code&gt;Codex32&lt;/code&gt; is a scheme designed to manage &lt;code&gt;BIP32&lt;/code&gt; master seeds, commonly derived from 12 or 24 &amp;ldquo;seed words&amp;rdquo;, using a paper-based approach. This functionality is implemented in Core Lightning in the &lt;code&gt;common/codex32.{c, h}&lt;/code&gt; files, specifically through the &lt;code&gt;codex32_encode()&lt;/code&gt; and &lt;code&gt;codex32_secret_decode()&lt;/code&gt; functions.&lt;/p&gt;
+&lt;p&gt;With inspiration from the corresponding unit test, &lt;code&gt;common/test/run-codex32&lt;/code&gt;, I added a new target to fuzz test these functions. The new target has been pushed upstream and can be accessed at &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8390&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8390&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;parse_splice_script&lt;/code&gt;&lt;/strong&gt;: While reviewing the common tests for potential fuzzing opportunities, I came across the splice_script tests and thought it might be a good idea to replace the splice script inputs with fuzzer input. I created a target for this and discovered an overflow bug. However, after further investigation, I realized that this bug couldn’t realistically be triggered by an external agent. The only way to reach the function is via the dev-splice RPC method, which itself applies several layers of checks before the script reaches the function.&lt;/p&gt;
+&lt;p&gt;Given that the function doesn&amp;rsquo;t actually handle untrusted input in practice, I decided it&amp;rsquo;s not worthwhile to add this target to the test suite.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Improved the &lt;code&gt;open_channel&lt;/code&gt; target&lt;/strong&gt;: According to &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8373#issuecomment-3014357897&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Matt’s feedback&lt;/a&gt;, the bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt; is likely an impossible scenario, as the type of message that would trigger it should be filtered out by its callers before the function is invoked. He suggested fuzz testing one of its callers, &lt;code&gt;fundee_channel()&lt;/code&gt;, which handles incoming &lt;code&gt;open_channel&lt;/code&gt; messages. Since I already had a target for &lt;code&gt;fundee_channel()&lt;/code&gt;, I attempted to trigger the bug through it but wasn’t successful.&lt;/p&gt;
+&lt;p&gt;Upon further investigation, I realized that my existing target wasn’t fuzzing the function deeply enough. To address this, I needed to make several changes to increase the depth of the fuzz runs, which took a substantial amount of time. Progress so far has been promising, but it’s not quite where it needs to be yet—so I plan to continue working on the remaining improvements in the coming weeks.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Complete the target for &lt;code&gt;channeld-lightningd&lt;/code&gt; interface&lt;/strong&gt;: I’ve already completed the initial work for this target and plan to tackle the remaining parts in the upcoming week. Since the setup for &lt;code&gt;channeld&lt;/code&gt; differs from that of the other daemons, it may take a bit more time than the other interface fuzzers did.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a target for &lt;code&gt;channeld-connectd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;peer_in()&lt;/code&gt; in &lt;code&gt;channeld/channeld.c&lt;/code&gt; is responsible for handling connectd messages such as &lt;code&gt;UPDATE_ADD_HTLC&lt;/code&gt; and &lt;code&gt;REVOKE_AND_ACK&lt;/code&gt;. Given its stateful structure, I plan to add a stateful fuzz test simulating this function in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finish improving the &lt;code&gt;open_channel&lt;/code&gt; target&lt;/strong&gt;: I’ve already made significant improvements to this target, resulting in a 2x increase in coverage. However, there’s still work to be done before the fuzzer can reach the section of the code where this function calls &lt;code&gt;initial_channel_tx()&lt;/code&gt;. I’ll focus on getting it there in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revisit the finished targets&lt;/strong&gt;: Revisiting the target for &lt;code&gt;open_channel&lt;/code&gt;/&lt;code&gt;fundee_channel()&lt;/code&gt; made me realize that several of my other targets might also be underperforming in terms of how thoroughly they fuzz their respective functions. To address this, I plan to revisit at least the more complex targets to ensure they exercise their code paths more effectively.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create targets for json-parsing code&lt;/strong&gt;: CLN contains a substantial amount of code dedicated to handling streams of &lt;code&gt;JSON&lt;/code&gt; input, but it’s unclear whether this input can originate from external agents or if it’s limited to internal inter-daemon communication or user-facing inputs like RPC calls. I plan to discuss this with Matt in our next meeting to determine whether these functions are worth fuzzing. If he agrees, I’ll proceed with writing new targets for them.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;One of my concerns turned out to be valid during my investigation of the fuzzer for open_channel messages—my targets aren’t exploring as deeply as I’d hoped. Relying solely on libFuzzer mutations isn’t sufficient to uncover hidden bugs. As a result, I’ll need to revisit a number of my existing targets, assess their coverage—a tedious but necessary task—and rewrite or modify parts of the fuzzers to ensure they reach deeper execution paths.&lt;/p&gt;
+&lt;p&gt;Given the limited time left in the project, taking on this task likely means I won’t be able to create as many new targets as I initially planned. That said, I think it&amp;rsquo;s a reasonable trade-off, since achieving depth in fuzzing is ultimately more valuable than sheer breadth.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Week 7 is now complete, which means we&amp;rsquo;re already past the halfway point of the project. Looking back, I feel like I’ve both achieved more and less than I originally expected, if that makes sense. With limited time remaining and academic obligations starting to catch up, I think it&amp;rsquo;s time to shift focus toward finalizing and polishing the work I’ve already completed.&lt;/p&gt;
+&lt;p&gt;For the time I do have left to work on new targets, I believe it’s still worthwhile to continue pursuing more complex ones—even if they haven’t yielded many results so far. Tackling them has been a valuable learning experience, and there’s still potential for uncovering meaningful issues.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 6</title>
+      <link>http://localhost:1313/sob/2025-06-29-sob-week-6/</link>
+      <pubDate>Sun, 29 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-06-29-sob-week-6/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I worked on the goals I outlined last week. Other than that, most of my time was devoted to reviewing potential bugs and writing new tests. I fell sick toward the end of the week, which caused some hurdles, but I believe I still managed to get a satisfactory amount of work done.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the &lt;code&gt;tlv_unknown&lt;/code&gt; target&lt;/strong&gt;: I took a look at this target at the start of the week, and while I initially suspected that the failure was due to an actual bug, it turned out the issue was in my setup for comparing two &lt;code&gt;tlv_unknown&lt;/code&gt; structs. I ended up writing a function to properly compare the structs, which resolved the test failure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reported to Matt about the potential bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;&lt;/strong&gt;: I finally put together a write-up and brought the issue to Matt, who got back to me at the end of the week. Based on his response, it seems this is another impossible scenario that shouldn&amp;rsquo;t occur in real-world usage. That said, I’m still not fully convinced by that conclusion. I plan to revisit the function under test and examine its callers to see if the breakage can be triggered from another path. If I’m unable to find a viable path through the existing callers, I’ll add checks in the target to guard against cases like this.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: I received some feedback on my previous PRs this week, like the fuzz target for &lt;code&gt;bech32&lt;/code&gt;, and a significant portion of my time was spent addressing that feedback.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;gossipd-connectd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;connectd_req()&lt;/code&gt; in &lt;code&gt;gossipd/gossipd.c&lt;/code&gt; is responsible for handling messages that &lt;code&gt;gossipd&lt;/code&gt; receives from &lt;code&gt;connectd&lt;/code&gt;. Since the function follows a stateful structure, I created a stateful fuzzer to simulate its behavior—effectively simulating messages sent from &lt;code&gt;connectd&lt;/code&gt; to &lt;code&gt;gossipd&lt;/code&gt;. The work on this target is now complete, and I plan to push the change in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;gossipd-lightningd&lt;/code&gt; interface&lt;/strong&gt;: &lt;code&gt;recv_req()&lt;/code&gt; in &lt;code&gt;gossipd/gossipd.c&lt;/code&gt; is responsible for handling messages that &lt;code&gt;gossipd&lt;/code&gt; receives from &lt;code&gt;lightningd&lt;/code&gt;. Since this function also follows a stateful structure, I created a stateful fuzzer to simulate its behavior—effectively simulating messages from &lt;code&gt;lightningd&lt;/code&gt; to &lt;code&gt;gossipd&lt;/code&gt;. The work on this target is complete as well, and I plan to push the change in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;gossmap_manage&lt;/code&gt;&lt;/strong&gt;: &lt;code&gt;gossmap_manage.{c, h}&lt;/code&gt; defines the operations and structures responsible for managing the gossip map during peer communication. After reviewing the operations, I felt they would make a good candidate for fuzz testing, so I created a stateful fuzz target for them. The core work on the target is complete, but it&amp;rsquo;s currently encountering memory leak errors. I spent a considerable amount of time trying to resolve the issue, but it appears to be a genuine bug in the code—one that&amp;rsquo;s a bit too complex for me to tackle alone. I plan to bring it up with Matt for help in the coming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I resumed my work on adding new fuzz targets and improving existing ones this week and had built up good momentum—until I was sidelined by a fever. It may take a few days to fully recover, but once I’m back to full strength, I plan to return to my regular schedule and continue working on new targets. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Report to Matt about the potential bug in &lt;code&gt;gossmap_manage&lt;/code&gt;&lt;/strong&gt;: I spent a considerable amount of time this week trying to identify and fix the memory leak issue in this target, but unfortunately, I wasn’t able to resolve it. I’ll need to escalate the issue to Matt and ask for his help—hopefully, it turns out to be an actual bug worth addressing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Follow up on feedback&lt;/strong&gt;: I received some additional feedback on my PRs toward the end of the week, which I plan to address in the coming week—hopefully, that will wrap things up for those PRs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Work on stateful targets for &lt;code&gt;channeld&lt;/code&gt;&lt;/strong&gt;: After working on the stateful fuzz test for &lt;code&gt;gossipd&lt;/code&gt;, I explored the codebase further and noticed that &lt;code&gt;channeld&lt;/code&gt; uses a very similar setup for its communication with other daemons. Since the experience I gained from the &lt;code&gt;gossipd&lt;/code&gt; tests is directly applicable here, I think it&amp;rsquo;s worthwhile to add similar stateful fuzz tests for &lt;code&gt;channeld&lt;/code&gt; as well.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create targets for &lt;code&gt;common/&lt;/code&gt; code&lt;/strong&gt;: There are quite a few functions in the &lt;code&gt;common/&lt;/code&gt; directory that would benefit from fuzz testing, given their role in handling untrusted or external input. I plan to add tests for some of these functions in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I came down with a mild fever toward the end of the week, so I wasn’t able to accomplish as much as I had hoped. That said, there’s no point dwelling on it—what’s done is done, and there wasn’t much I could’ve done to prevent it. I’ll focus on recovering quickly so I can get back to working fully on the project. In the meantime, I’ll try to handle some of the easier targets to keep things moving.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I’m happy to share that I finally started tackling more complex targets. While most of them haven’t led to new vulnerabilities being uncovered yet, the experience I’ve gained—both in terms of working on the project and growing as a programmer—has made the effort well worth it. I have a feeling that if I keep pushing in this direction, I might stumble upon something significant soon.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 5</title>
+      <link>http://localhost:1313/sob/2025-06-21-sob-week-5/</link>
+      <pubDate>Sat, 21 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-06-21-sob-week-5/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Last week, I set out to resolve holdups in the existing tests and investigate potential bugs, and I’m happy to report that I reached solid conclusions on most of them. In addition, I addressed Matt’s feedback on the branches I had already pushed upstream and worked on a couple of new targets.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fix the &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; target&lt;/strong&gt;: I finally had a chance to look at this target, and contrary to what I said last week, the exiting behavior of the target function isn’t inappropriate—it’s intended to exit from the subdaemon and return control to the master daemon, &lt;code&gt;lightningd&lt;/code&gt;. I found a way to work around this behavior by unlinking the object containing the error function and redefining it in the target file to jump back to a return point using &lt;code&gt;setjmp.h&lt;/code&gt;. The PR for this target is now ready to be merged and can be accessed at &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8304&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8304&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigated the potential bug in initial_channel_tx()&lt;/strong&gt;: I revisited this issue but unfortunately still couldn’t determine whether it’s an actual bug or a problem with the target itself. I meant to ask Matt for help, but wasn’t able to this week due to other commitments. I’ll make sure to reach out to him next week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the bug in route calculation&lt;/strong&gt;: Last week, we confirmed that this was an actual bug that could be triggered from external sources. This week, the focus was on investigating the severity of the bug—specifically, what would happen if the project were compiled in a production setting without UBSan. We concluded that, while the bug may cause a couple of routes to be excluded from the route calculation process, it doesn&amp;rsquo;t result in anything catastrophic like a crash. The worst-case scenario is some inconvenience.&lt;/p&gt;
+&lt;p&gt;I’ve worked on a rudimentary fix and a test case to demonstrate the issue, both of which can be found in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8357&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8357&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed the bug in &lt;code&gt;tlv_span()&lt;/code&gt;&lt;/strong&gt;: While addressing Matt’s feedback on a new fuzz target for &lt;code&gt;tlv_span()&lt;/code&gt; last week, I encountered a breakage that appeared to be a genuine bug—and Matt confirmed it to be one. The next steps were to create a test to demonstrate the issue and implement a fix. The fix was straightforward (Matt pointed it out), and the test case was simple as well, so both were completed within the week. The changes are available in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8364&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8364&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, the fuzzing work for this isn’t fully complete yet. I still need to address a couple of points from Matt’s feedback. Since the feedback came in late, I wasn’t able to handle it this week, but I’ll make sure to wrap it up in the next.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: I received a lot of feedback on my previous PRs this week, like the fuzz target for &lt;code&gt;calculate_our_funding()&lt;/code&gt;, and a significant portion of my time was spent addressing that feedback. A couple of those PRs have already received an ACK, but there’s still some work left to be done on the others. I’ll aim to finish the remaining work by the end of next week and hopefully secure ACKs for those as well.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a target for &lt;code&gt;parse_onionmsg&lt;/code&gt;&lt;/strong&gt;: Last week, Matt suggested creating a fuzz target for the handler of onion messages. Since there are a couple of handlers operating at different levels, I chose to fuzz &lt;code&gt;onion_message_parse()&lt;/code&gt;, as it&amp;rsquo;s the function responsible for parsing the untrusted input. The work was straightforward and didn’t take much time. I plan to push this change in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added targets for &lt;code&gt;open_channel&lt;/code&gt; and &lt;code&gt;open_channel2&lt;/code&gt; handlers&lt;/strong&gt;: I added new fuzz targets for the handlers of &lt;code&gt;open_channel&lt;/code&gt; and &lt;code&gt;open_channel2&lt;/code&gt; messages, as defined in BOLT #2. Once the first was done, the second was fairly straightforward since both handlers work with similar input types and structures. I plan to push these upstream for review soon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fixed &lt;code&gt;fuzz-close_tx&lt;/code&gt;&lt;/strong&gt;: This fix was a byproduct of the feedback on the fuzz target for calculate_our_funding(), where the maximum value for a satoshi was overflowing due to being stored in a u32. Since I had copied the max value from this target, I needed to fix the overflow here as well. The work is completed, and I&amp;rsquo;ll push the change in the next week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added wire targets for &lt;code&gt;tlv_invoice_request&lt;/code&gt; and &lt;code&gt;tlv_offer&lt;/code&gt;&lt;/strong&gt;: While reviewing &lt;code&gt;bolt12-wiregen.h&lt;/code&gt;, I noticed a few message types that had wire operations defined but weren’t being fuzzed in the current setup. I decided to add fuzz targets for a couple of them to see if anything would break, but nothing did. Since these messages all rely on the same underlying operations, I felt it would be redundant to add targets for the rest. That said, I still plan to push the targets I’ve already worked on in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I had to put my strategy of incrementally reviewing existing tests and working toward writing new ones on hold last week, as many of the tests I was working on were blocked by various errors. I believe I’ve now resolved most of those issues, so it should be fine to resume work on adding new fuzz targets. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fix the &lt;code&gt;tlv_unknown&lt;/code&gt; target&lt;/strong&gt;: Toward the end of last week, I began working on a fuzz target for the &lt;code&gt;tlv_unknown&lt;/code&gt; message type, drawing inspiration from &lt;code&gt;common/test/run-tlv_unknown&lt;/code&gt;. The target ran into some issues, and since I was at the end of the week, I didn’t have time to fix them. I plan to address those problems in the coming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Report to Matt about the potential bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;&lt;/strong&gt;: I believe I’ve exhausted all my ideas for uncovering this bug, so at this point, I’ll need to refer to Matt for help. I’ll put together a write-up summarizing everything I’ve discovered so far and reach out to him—hopefully, we can sort this error out.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Follow up on feedback&lt;/strong&gt;: I received some additional feedback on my PRs toward the end of the week, which I plan to address in the coming week—hopefully, that will wrap things up for those PRs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Work a stateful target for gossipd&lt;/strong&gt;: Among the fuzz target ideas Matt shared with me last week was one for adding a stateful target that mimics &lt;code&gt;handle_recv_gossip()&lt;/code&gt;, which is responsible for handling incoming gossip messages from peers. After reading up on the function, I agree that the idea is worth pursuing and have started working on it. So far, I’ve created the test file and completed some initial setup, and I plan to finish the work on this target in the coming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Toward the end of the week, I realized that I’d been somewhat avoiding the more complex targets over the past few weeks, mainly because of the challenging setup they require. But looking back, I’ve already added and improved a substantial number of fuzz targets during this project—so it would be shortsighted not to take on the tougher ones.&lt;/p&gt;
+&lt;p&gt;After all, there’s no guarantee that anyone else will pick up fuzzing in CLN once my project concludes. With that in mind, I think it’s worth banging my head and making the extra effort now to tackle the setup hurdles involved in these more complex tests, so I can uncover as many vulnerabilities as possible while I still have the opportunity.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I was a bit disheartened that none of the work I did this week led to the discovery of new bugs, but that’s okay—one thing I’ve come to learn over the past few weeks is that fuzz testing is a game of patience. You have to keep pushing, and eventually, you’ll get results—that’s how I discovered my first bug, after all.&lt;/p&gt;
+&lt;p&gt;With the experience I’ve gained from working on the simpler targets, I’ve decided to start tackling more complex ones now. I’m hoping that this next phase will help uncover a more substantial vulnerability in CLN.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 4</title>
+      <link>http://localhost:1313/sob/2025-06-14-sob-week-4/</link>
+      <pubDate>Sat, 14 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-06-14-sob-week-4/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Last week, I set out to resolve the errors in the existing tests, and I’m happy to report that I reached solid conclusions on most of them. In addition, I completed the review of all remaining non-wire fuzzers and addressed Matt’s feedback on the branches I had already pushed upstream. All in all, I believe this was one of my more productive weeks in the project so far.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Discussed the &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; target&lt;/strong&gt;: I had planned to discuss this issue with Matt before deciding whether to continue working on this target, and through our discussion, I came to understand that the target&amp;rsquo;s behavior when parsing an error message is indeed inappropriate—contrary to what I initially thought. Since the meeting took place toward the end of the week, I didn’t get a chance to review the target again, but I plan to do so in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed the &lt;code&gt;ping_pong&lt;/code&gt; and &lt;code&gt;peer_init&lt;/code&gt; tests&lt;/strong&gt;: Aside from the &lt;code&gt;peer_error&lt;/code&gt; and &lt;code&gt;peer_warning&lt;/code&gt; message handlers, the other BOLT #1 handler tests that were failing were for the &lt;code&gt;ping-pong&lt;/code&gt; and &lt;code&gt;init&lt;/code&gt; messages. I had to scale down the scope of testing in the &lt;code&gt;ping-pong&lt;/code&gt; handler test to get it working, but in the end, I was able to get both of these handlers functioning correctly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigated the potential bug in route calculation&lt;/strong&gt;: To my pleasant surprise, this turned out to be an actual bug in the gossip store. It took some time to thoroughly verify the issue, create a high level test to trigger the bug, and prepare a write-up for Matt to understand the situation, but we&amp;rsquo;ve now confirmed that this is indeed a real bug that needs fixing—so none of the time invested was wasted.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;&lt;/strong&gt;: I reviewed this test at the very beginning of the week, so I don’t clearly recall all the specifics, but I do remember that I wasn’t able to reach a concrete conclusion. I’ll likely need to discuss a few aspects with Matt to clarify the path forward.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Addressed received feedback&lt;/strong&gt;: I received feedback on a couple of my previous PR&amp;rsquo;s—like the &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8312&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;funder-policy&lt;/code&gt; fuzz test&lt;/a&gt; I worked on in week 2—and spent time addressing them to secure an ACK for each update. The work isn&amp;rsquo;t finished yet because I need some clarification on some of the feedback and the reviewer(s) haven&amp;rsquo;t replied yet, so this is a WIP until the next week.&lt;/p&gt;
+&lt;p&gt;A point of interest is that while I was addressing feedback on one of my PRs—specifically the &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8350&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;new test for &lt;code&gt;bolt12-tlvspan&lt;/code&gt;&lt;/a&gt;—I stumbled upon what appears to be another potential bug. I spent some time investigating the breakage and putting together a detailed write-up of the scenario. I believe it was time well spent, as I’m fairly confident this is a genuine bug.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed &lt;code&gt;descriptor_checksum&lt;/code&gt; and &lt;code&gt;close_tx&lt;/code&gt; tests&lt;/strong&gt;: These test fuzz test the code in &lt;code&gt;common/descriptor_checksum.h&lt;/code&gt; and &lt;code&gt;common/close_tx.h&lt;/code&gt; respectively. Since they already cover their target files thoroughly, and I believe there is little room for hidden bugs, I marked these tests as reviewed for now.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed &lt;code&gt;bolt11&lt;/code&gt; test&lt;/strong&gt;: This was an easy test to review. I updated it by adding a check for a function—&lt;code&gt;bolt11_encode()&lt;/code&gt; to be exact—that was untested by the current setup and making a few other minor improvements. I plan to push the changes in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed &lt;code&gt;channel_id&lt;/code&gt; tests&lt;/strong&gt;: This was another easy test to review. I improved it by removing hard-coded values and making the existing wire test round-trip. I plan to push the changes in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan to put my current strategy—incrementally reviewing existing tests and working toward writing new ones—on hold for the next week. Many of the tests I’ve worked on are currently blocked by various errors, so I believe it’s better to focus on resolving those issues first before moving on to working on new tests. I&amp;rsquo;ll still probably review a test or two, but I plan on focusing mainly on resolving the outstanding issues. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fix the &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; target&lt;/strong&gt;: I plan to revisit this target and investigate the source of the exit() calls. I’ll aim to reach a definite conclusion, but if I’m unable to do so, I’ll bring it up with Matt to decide on the next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;&lt;/strong&gt;: I took a look at this last week but wasn’t able to reach any concrete conclusions. I’ll give it another attempt in the coming week, and if I’m still stuck, I’ll reach out to Matt for help.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in route calculation&lt;/strong&gt;: We&amp;rsquo;ve already confirmed that this is a real bug, and Matt believes it&amp;rsquo;s potentially triggerable from external sources. The next step, as per Matt&amp;rsquo;s guidance, is to determine the severity of the bug—that is, to understand what happens when UBSan isn’t present to catch the issue and the erroneous value is allowed to propagate down the call stack. Specifically, we need to see how it affects the route calculation process and whether it can lead to any significant consequences. Once we have a clear picture of the impact, we’ll decide whether to report the bug publicly on the CLN GitHub or through their security mailing list.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Follow up on feedback&lt;/strong&gt;: I expect the reviewers to respond to my questions on their feedback sometime next week. Once I hear back, I’ll follow up accordingly and aim to wrap up the work on the outstanding targets.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Explore Matt&amp;rsquo;s ideas for fuzz targets&lt;/strong&gt;: I’ve completed reviewing the non-wire fuzzers, and since Matt had been suggesting for a while during our meetings that I look into some of his ideas for new fuzz targets, I decided to pause the review of the wire fuzzers for now and focus on his suggestions instead. Given his deeper knowledge of the Lightning protocol, he likely has a better sense of which areas are worth fuzz testing and where hidden bugs are more likely to exist. He emailed me a couple of ideas yesterday, which I plan to explore in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The work I got done this week on the crashing targets was fairly satisfying, though I didn’t manage to wrap up all of them—which is a bit disappointing. Still, I’m confident I can sort out the remaining issues in the next week.&lt;/p&gt;
+&lt;p&gt;One thing that’s become increasingly clear the deeper I get into this project is how difficult it is to trigger potential bugs from a higher level. I brought this up with Matt in our last meeting, and he confirmed what I was suspecting: the best chances lie in modifying either the existing unit tests or the existing Python tests. Unit tests are definitely easier to work with, though there aren’t many of them to go around. On the other hand, while there are more Python tests, they’re harder to navigate—mostly because I’m still relatively new to Python.&lt;/p&gt;
+&lt;p&gt;Another major challenge has been isolating functions for testing. My earlier work on stubbing the wire fuzzers helps with this somewhat, but there’s still a lot of boilerplate and plumbing work needed to make even basic function-level testing possible. In some cases, it’s not worth pursuing a test at all, simply because the required setup is too complex or time-consuming relative to the value of the test.&lt;/p&gt;
+&lt;p&gt;This is why many of my more recent fuzz tests have been reinterpretations of existing unit tests. These tests already have a lot of the groundwork in place and serve as useful documentation of expected behavior. So far, this approach has proven to be quite productive, and I plan to stick with it and expand on it in the coming weeks.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I uncovered my first real bug in CLN the week before last, a not-very-serious one in week 2, and this week brought another confirmed bug along with a promising lead on a potential one—so I’m feeling pretty good about the value of my work on this project so far. I hadn’t explored security this seriously before, but I’m genuinely enjoying it. That said, the work is far from done. I’m planning to raise the bar for myself and aim to uncover several more bugs before the project wraps up.&lt;/p&gt;
+&lt;p&gt;One thing that has been a bit discouraging is the apparent indifference from the Core Lightning maintainers toward both my work and fuzzing in general, even though the effort has already exposed multiple bugs in their codebase. It’s frustrating, but not something I can control, so I’m focusing on the work itself and making the most of the opportunity.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 3</title>
+      <link>http://localhost:1313/sob/2025-06-07-sob-week-3/</link>
+      <pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-06-07-sob-week-3/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I worked on the goals I outlined last week. While I didn’t achieve all of them, I completed satisfactory work on most. The majority of my time was devoted to reviewing potential bugs from this week and last, writing new tests, and identifying improvements for the existing tests—much like the previous week.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigated the potential bug in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt;&lt;/strong&gt;: As I suspected, this wasn’t an actual bug but rather a mistake in the setup of my harness. You&amp;rsquo;re supposed to call &lt;code&gt;status_setup_async()&lt;/code&gt; before using any functions from &lt;code&gt;common/read_peer_message.h&lt;/code&gt;, as it initializes the necessary global state. I’ve fixed that issue, but there are still some errors in the harness.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed the &lt;code&gt;initial_channel&lt;/code&gt; test&lt;/strong&gt;: This was one of the easier tests to review. During the review, I noticed that it fuzz-tests only one of the three functions in its target file, leaving &lt;code&gt;initial_channel_tx()&lt;/code&gt; and &lt;code&gt;channel_update_funding()&lt;/code&gt; untested. I added a test for &lt;code&gt;channel_update_funding()&lt;/code&gt;, which causes the harness to crash. Based on my initial investigation, it appears to be another improbable bug. Regardless, I’ll discuss it with Matt next week before deciding on the next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed &lt;code&gt;fuzz-hsm_encryption&lt;/code&gt;&lt;/strong&gt;: This was another easy test to review. I updated it by removing hard-coded values and making a few other minor improvements. I plan to push the changes in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed the &lt;code&gt;cryptomsg&lt;/code&gt; test&lt;/strong&gt;: This test fuzzes the &lt;code&gt;cryptomsg_decrypt_body()&lt;/code&gt; and &lt;code&gt;cryptomsg_decrypt_header()&lt;/code&gt; functions in &lt;code&gt;common/cryptomsg.h&lt;/code&gt;. It already covers its target files thoroughly, and I believe there is little room for hidden bugs, so this test is marked as reviewed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a wire test for &lt;code&gt;wireaddr&lt;/code&gt;&lt;/strong&gt;: Wire functions in &lt;code&gt;common/wireaddr.{c, h}&lt;/code&gt; consume untrusted input. Since no fuzz-tests existed for these functions, I added a round-trip test for the wire operations of &lt;code&gt;struct wireaddr&lt;/code&gt;, similar to the other wire fuzzers. I&amp;rsquo;ll push the changes upstream soon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a wire test for &lt;code&gt;wireaddr_internal&lt;/code&gt;&lt;/strong&gt;: This test closely mirrors the one I created for wireaddr, primarily because the two are very similar in structure and behavior. To my surprise, this simple test led to the discovery of an actual bug in the address parsing code. The bug is an out-of-bounds error triggered when attempting to read a DNS address of length 255 from the wire. I discussed the issue with Matt and we agreed on an approach for the fix.&lt;/p&gt;
+&lt;p&gt;Full details of the bug and its fix are available in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8325&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8325&lt;/a&gt;, and the fuzz test can be found in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8324&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8324&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a stateful test for gossip routing&lt;/strong&gt;: While examining the &lt;code&gt;plugins/&lt;/code&gt; code during my investigation of the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;, I came across two tests—&lt;code&gt;run-route-calc&lt;/code&gt; and &lt;code&gt;run-route-overlong&lt;/code&gt;—that simulate a sequence of operations: adding a channel, updating a channel, and finding a route between nodes. I thought this pattern could work well as a stateful fuzz test, with each fuzzer input byte representing one of these operations, and proceeded to implement it.&lt;/p&gt;
+&lt;p&gt;Writing the initial test took much longer than expected—about a day for the first version and another day to resolve the initial bugs. However, the resulting test still fails, and the failure appears to be caused by a genuine bug in route calculation. I&amp;rsquo;ve done some investigation—which again, took longer than anticipated—and believe it is a real issue, though I can’t say for certain yet. I plan to write a high-level test to simulate triggering this bug through external input, after which we can determine the next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan to put my current strategy—incrementally reviewing existing tests and working toward writing new ones—on hold for the next week. Many of the tests I’ve worked on are currently blocked by various errors, so I believe it’s better to focus on resolving those issues first before moving on to working on new tests. I&amp;rsquo;ll still probably review a test or two, but I plan on focusing mainly on resolving the outstanding issues. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fix the &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; target&lt;/strong&gt;:  i fixed the &lt;code&gt;NULL&lt;/code&gt; dereference error in this target this week, but it led to instances where the harness calls &lt;code&gt;exit()&lt;/code&gt; in certain code paths. I’ve tried to find a way to intercept these calls, but haven’t had any success. I’ll need to discuss this with Matt in our next meeting on Thursday before deciding whether it’s worth spending more time on this target.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fix other BOLT #1 message handler targets&lt;/strong&gt;: The potential bug I encountered in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; also affected some other BOLT #1 handlers I was working on—specifically the &lt;code&gt;ping-pong&lt;/code&gt; and &lt;code&gt;peer_init&lt;/code&gt; handlers. I fixed the issue in both, but that led to new issues emerging. I’ll work on resolving them fully in the coming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in the &lt;code&gt;calculate_our_funding()&lt;/code&gt;&lt;/strong&gt;: I tried investigating around this issue but that proved to be inconclusive so I took the matters to Matt. He told me he&amp;rsquo;d look into it but since he&amp;rsquo;s just gotten back from vacation and has been dealing with some family issues, he couldn&amp;rsquo;t find the time to get into it. Until Matt finds the time to look into this, I&amp;rsquo;ve decided to give this issue another go in the upcoming week. Hopefully I find something conclusive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in route calculation&lt;/strong&gt;: This issue has already taken up a significant portion of my time this week, so I plan to give it another day or two at most to see if I can find a way to trigger the bug from a higher level. If that doesn’t yield results, I’ll bring it to Matt’s attention.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;initial_channel_tx()&lt;/code&gt;&lt;/strong&gt;: In addition to the improbable bug in &lt;code&gt;channel_update_funding()&lt;/code&gt; mentioned in the &lt;strong&gt;Goals Accomplished&lt;/strong&gt; section, another failure occurred after introducing a test for &lt;code&gt;initial_channel_tx()&lt;/code&gt;. Since this bug was discovered at the very end of last week, I haven’t had a chance to investigate it yet, but I plan to do so in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Review other tests&lt;/strong&gt;: Only four non-wire tests remain to be reviewed, so if I can spare some time from addressing the current breakages, I’ll aim to complete the review of these tests. That would wrap up a significant portion of the &lt;em&gt;improving existing tests&lt;/em&gt; section of my project.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I initially thought the work on BOLT #1 message handlers was complete, but after the &lt;code&gt;NULL&lt;/code&gt; dereference error turned out to be a false positive, I had to revisit each handler. Unfortunately, all of them are now blocked by separate issues, even after applying the fix. I’ll tackle them one at a time and aim to complete the remaining work on these handlers in the upcoming week.&lt;/p&gt;
+&lt;p&gt;Apart from that, the biggest roadblocks right now are the crashes occurring across various tests. On top of this, I discovered that my Git stash was corrupted, which contained important progress I had made on some bug investigations—so I’ll have to start over for several of them. One key lesson I’ve taken from this is the importance of addressing errors and crashes as early as possible. Starting next week, I’ll make it a point to resolve these issues as soon as they arise. Haste makes waste after all :)&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I uncovered my first real bug in CLN this week, which was quite exciting. Hopefully, the fix I’ve pushed gets merged soon and encourages the maintainers to take fuzz testing more seriously—especially since every other improvement I’ve made to the fuzz testing suite so far has largely been overlooked. In any case, I’m optimistic about finding a few more bugs—hopefully more serious ones—through my investigations in the coming week.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 2</title>
+      <link>http://localhost:1313/sob/2025-05-31-sob-week-2/</link>
+      <pubDate>Sat, 31 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-05-31-sob-week-2/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I worked on the goals I outlined last week. While I didn’t achieve all of them, I completed satisfactory work on most. The majority of my time was devoted to reviewing potential bugs from last week, writing new tests, and identifying improvements for the existing tests—much like the previous week.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigated the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;&lt;/strong&gt;: Before Matt went on vacation, he asked me to investigate the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;, which was revealed by the amount-{sat, msat} arithmetic test I wrote last week. This took much longer than expected. After a comprehensive investigation, I found that the only time the function under scrutiny—&lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;—is invoked is through the &lt;code&gt;getroutes&lt;/code&gt; method in the plugin named &lt;code&gt;askrene&lt;/code&gt;. I added a user-level Python test in &lt;code&gt;tests/test_askrene.py&lt;/code&gt; to attempt to pass the error-causing parameters all the way to &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;, but I discovered that the values are truncated to a set of safe values as soon as any parameter becomes too large.&lt;/p&gt;
+&lt;p&gt;In summary, I have concluded that it does not appear possible for any external message to cause the breakage observed in the fuzz test. I will report these findings to Matt and decide on our next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigated the potential bug in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt;&lt;/strong&gt;: This was the other bug I planned to investigate this week. I looked for the callers of this function—similar to my approach for the previous bug—and discovered that it may be triggered by one of these callers, specifically one in &lt;code&gt;closingd/closingd.c&lt;/code&gt;. I have identified the cause of the bug but am unsure how to fix it, so I will discuss it with Matt next week before deciding on an approach.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed the handshake tests&lt;/strong&gt;: There are three handshake tests in the fuzz suite: &lt;code&gt;fuzz-connectd-handshake-act1&lt;/code&gt;, &lt;code&gt;fuzz-connectd-handshake-act2&lt;/code&gt; and &lt;code&gt;fuzz-connectd-handshake-act3&lt;/code&gt;. I had already examined these tests thoroughly before SoB, when I was attempting to add a stateful fuzz test for the handshaking protocol. Since they are already pretty comprehensive, I checked them off for now.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed &lt;code&gt;bip32&lt;/code&gt; and &lt;code&gt;sha256&lt;/code&gt; tests&lt;/strong&gt;: These tests already cover their target files thoroughly, and I believe there is little room for hidden bugs in their scope, so I marked them as complete. I considered adding a double SHA256 check to the SHA256 test, but there is no double SHA256 method in OpenSSL for comparison, and since no bug exists in SHA256, the likelihood of finding a bug in double SHA256 is minuscule. Therefore, I decided to focus my efforts on more fruitful areas.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a test for BOLT #12 &lt;code&gt;tlv_span()&lt;/code&gt;&lt;/strong&gt;: While reviewing the fuzz tests for BOLT #12 methods, I noticed that &lt;code&gt;tlv_span()&lt;/code&gt; in &lt;code&gt;common/bolt12.c&lt;/code&gt; consumes untrusted input in the form of a &lt;code&gt;tlvstream&lt;/code&gt; but was untested by the existing suite. I added a test for it, and although it didn’t uncover any new errors, I believe it’s a valuable addition to the fuzz suite. I plan to push this test later in the upcoming week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a wire test for &lt;code&gt;onionreply&lt;/code&gt; messages&lt;/strong&gt;: While reviewing the codebase for one of the new tests I added this week, I noticed that the &lt;code&gt;onionreply&lt;/code&gt; unmarshalling and marshalling functions—&lt;code&gt;fromwire_onionreply()&lt;/code&gt; and &lt;code&gt;towire_onionreply()&lt;/code&gt;—aren’t tested. I added a round-trip test for these functions, similar to the other wire fuzzers, and plan to push this change soon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a wire test for &lt;code&gt;calculate_our_funding()&lt;/code&gt;&lt;/strong&gt;: While examining the &lt;code&gt;plugins/&lt;/code&gt; code during my investigation of the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;, I noticed a test named &lt;code&gt;run-funder-policy&lt;/code&gt; that attempted to simulate a fuzz test. I converted this into an actual fuzz test, which resulted in a failure that appears to be a genuine bug. I have conducted an initial investigation into the failure and believe it is a real issue, although some aspects remain unclear. I will write a small report on Monday and have Matt review it. We can then determine the next steps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan on using the same strategy for the next week that I used this week, which is to divide my time into incrementally reviewing the existing tests and working towards writing a new one. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;calculate_our_funding()&lt;/code&gt;&lt;/strong&gt;: My investigation into the &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt; bug was inconclusive, but I’m optimistic about this new issue. Since I haven’t identified its root cause yet, my next step is to clearly document the situation for Matt’s review. After discussing it with him, I’ll determine my next move.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reach a conclusion on the potential bug in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt;&lt;/strong&gt;: I have investigated this and understand why the breakage occurs, but I’m unsure whether it’s a genuine bug or an issue with my harness. I’ve encountered the same problem in the new BOLT #2 &lt;code&gt;handle_peer_in()&lt;/code&gt; test I’m working on, which leads me to suspect it’s a harness issue. I’ll consult Matt to reach a definitive conclusion, which I aim to do by our next meeting on Monday.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Review other tests&lt;/strong&gt;: Similar to the last week, I plan to review at least five new tests next week. This will help me stay aligned with the schedule I outlined in my proposal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Continue working on BOLT #2 message handlers&lt;/strong&gt;: I completed work on the BOLT #1 message handlers this week and have already begun on the BOLT #2 handlers, starting with the &lt;code&gt;open_channel&lt;/code&gt; handler (&lt;code&gt;handle_peer_in&lt;/code&gt;). I will continue working on them and aim to finish the majority by the end of the week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;As mentioned, investigating the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt; required far more time and effort than I anticipated. However, I’m pleased that I reached a definite conclusion in the end. I cannot say the same about the bug in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt;. I had hoped to fix it or reach a concrete conclusion, but I haven’t been able to, so I’ll need Matt’s help. I encounter this bug in a couple of harnesses as well, so it’s better to resolve it as early as possible.&lt;/p&gt;
+&lt;p&gt;I must admit that writing tests for Core Lightning is a chore. Earlier this week, I looked at the LDK fuzz tests in hopes of adapting something for CLN, and I noticed how much easier their testing setup is to work with. I suppose the difference between C and Rust contributes to this, but I have worked on other non-trivial C projects—Git, systemd, and others—and adding tests there was much easier. Therefore, I can’t help but attribute some of these difficulties to the project’s architecture. Alas, there’s nothing I can do except wish it were better and make do with what I have. I&amp;rsquo;ll probably have to limit what I hoped to achieve through my SoB project though.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Matt comes back this week, so our next meeting is scheduled for Monday. I&amp;rsquo;ll discuss my progress with him and hopefully sort out the potential bugs in this meeting. I&amp;rsquo;m a little disheartened because I couldn&amp;rsquo;t acheive all the goals that I had planned for the week, but I&amp;rsquo;ll give a go at it again in the upcoming week and hopefully achieve more than what I have planned.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>SoB Week 1</title>
+      <link>http://localhost:1313/sob/2025-05-24-sob-week-1/</link>
+      <pubDate>Sat, 24 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-05-24-sob-week-1/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The official Summer of Bitcoin (SoB) internship began on May 15, 2025; however, due to academic obligations and personal matters, I didn’t start the project until Sunday, May 18, 2025. Nonetheless, I’ve made solid progress over the past week. During my weekly meetings with my mentor, Matt Morehourse, we agreed on a basic work plan for the project. I didn&amp;rsquo;t have to face a lot of the initial hurdles that come when starting work on a new project—thanks to the work I put in pre-SoB—and started working right away on improving the tests. The enhancements I added to the fuzz tests may have uncovered some bugs, although this isn’t yet certain.&lt;/p&gt;
+&lt;h2&gt;Goals accomplished&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals-accomplished&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals-accomplished&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added improvements to fuzz-addr&lt;/strong&gt;: Before this improment, &lt;code&gt;fuzz-addr&lt;/code&gt; only tested encoding via &lt;code&gt;encode_scriptpubkey_to_addr()&lt;/code&gt;, without checking decoding. I added a round‑trip assertion: if encoding produces an address, decode it back with &lt;code&gt;decode_scriptpubkey_from_addr()&lt;/code&gt; and confirm the result matches the original scriptpubkey. Full details of the change can be seen at &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8297&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8297&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Add a test for amount-{sat, msat} arithmetic&lt;/strong&gt;: While reviewing the &lt;code&gt;fuzz-amount&lt;/code&gt; test, I noticed that many procedures in the target file, &lt;code&gt;common/amount.{c,h}&lt;/code&gt;, were untested. I decided to write a test for the arithmetic operations, since they may receive input from untrusted sources.&lt;/p&gt;
+&lt;p&gt;The test revealed two potential bugs: one in &lt;code&gt;amount_(sat, msat)_scale()&lt;/code&gt;, where negative &lt;code&gt;scale&lt;/code&gt; values aren’t handled properly, and another in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;, where certain parameter values can trigger assertion failures within the function. I’ve already submitted &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8306&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8306&lt;/a&gt; to fix the first issue; as for the second, I need to investigate further before confirming it as a bug. Details of this change can be seen at &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8298&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8298&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added improvements to fuzz-bigsize&lt;/strong&gt;: Added a couple of small improvements to the &lt;code&gt;fuzz-bigsize&lt;/code&gt; test. The resulting PR can be accessed at &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8301&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8301&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added improvements to fuzz-bech32&lt;/strong&gt;: The existing test for &lt;code&gt;fuzz-bech32&lt;/code&gt; only tests 5-to-8 bit conversion. I added a roundtrip check for 8-to-5 bit conversion as well to test the conversion procedure more thoroughly. I plan on pushing this change in the near future.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a test for error/warn message handler&lt;/strong&gt;: My current strategy for adding new tests to the suite is to go through the &lt;a href=&#34;https://github.com/lightning/bolts&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BOLT specifications&lt;/a&gt; and fuzz the message handler for each type of message. As such, I decided to start with &lt;a href=&#34;https://github.com/lightning/bolts/blob/master/01-messaging.md&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BOLT #1&lt;/a&gt; and discovered that &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt; in &lt;code&gt;common/read_peer_message.{c, h}&lt;/code&gt; is responsible for parsing any incoming &lt;code&gt;error&lt;/code&gt; or &lt;code&gt;warning&lt;/code&gt; messages, and hence added a test for it resulting in &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8304&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PR #8304&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The test is WIP for now because the target crashes when run, potentially due to a bug in the message handler. I did some investigation around the breakage and concluded that there&amp;rsquo;s a good chance this isn&amp;rsquo;t a false positive, so I informed Matt and he told me he&amp;rsquo;d look into it later.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Reviewed other tests&lt;/strong&gt;: Besides the ones above, I took a look at the following tests but couldn&amp;rsquo;t think of any ways to improve them so they&amp;rsquo;re off the checklist for now: &lt;code&gt;fuzz-bolt12-bech32-decode&lt;/code&gt;, &lt;code&gt;fuzz-bolt12-invoice-decode&lt;/code&gt;, &lt;code&gt;fuzz-bolt12-invrequest-decode&lt;/code&gt;, and &lt;code&gt;fuzz-bolt12-offer-decode&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Added a test for BOLT #12 check_signature()&lt;/strong&gt;:  &lt;code&gt;common/bolt12.c::check_signature()&lt;/code&gt; verifies incoming peer signatures according to the &lt;a href=&#34;https://github.com/lightning/bolts/blob/master/12-offer-encoding.md&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BOLT #12 specification&lt;/a&gt;. While reviewing the &lt;code&gt;fuzz-bolt12-*&lt;/code&gt; tests, I noticed that &lt;code&gt;common/bolt12.c::check_signature()&lt;/code&gt; was untested by the current suite. Hence, I added a new fuzz test to ensure &lt;code&gt;check_signature()&lt;/code&gt; correctly validates signatures received over the wire. I plan on pushing this test to upstream soon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Polished previous patches&lt;/strong&gt;: I received feedback on my previous work—like the &lt;a href=&#34;https://github.com/ElementsProject/lightning/pull/8185&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;differential test for HMAC-SHA256&lt;/a&gt; that I developed before SoB, as well as some of the changes noted above—and spent time addressing them to secure an ACK for each update.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next week&amp;rsquo;s goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;next-weeks-goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#next-weeks-goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I plan on using the same strategy for the next week that I used this week, which is to divide my time into incrementally reviewing the existing tests and working towards writing a new one. With this being said, here are some of my immediate goals for the next week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;amount_msat_sub_fee()&lt;/code&gt;&lt;/strong&gt;: After discussing this with Matt, we recognize that when one of CLN’s assertions fails, it typically indicates a bug—potentially severe if an attacker can provoke it. I will investigate whether an attacker can trigger this assertion failure. If so, it represents a DoS vulnerability that must be promptly reported to the CLN team. I attempted to simulate such an attack by adding a test late last week, but it proved inconclusive. I will continue from where I left off and aim to identify a substantive issue.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Investigate the potential bug in &lt;code&gt;handle_peer_error_or_warning()&lt;/code&gt;&lt;/strong&gt;: This “dereferencing NULL pointer” bug was detected by UBSAN. I’ve performed an initial investigation, but I have additional ideas that I believe will yield stronger conclusions. I plan to explore these over the next week.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Review &lt;code&gt;fuzz-bip32&lt;/code&gt; and &lt;code&gt;fuzz-bolt11&lt;/code&gt;&lt;/strong&gt;: I believe I’ve already reviewed these two tests, but I don’t have a commit or note to confirm it. I’ll revisit them to identify any possibilities for improvement. Going forward, I’ll note down each test I review—especially since I’ve been working through them out of order.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Review other tests&lt;/strong&gt;: I plan to review at least five new tests next week. This will help me stay aligned with the schedule I outlined in my proposal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Finish tests for BOLT #1 message handlers&lt;/strong&gt;: I plan to complete the BOLT #1 message handlers by midweek. I’ve already identified where most of them live, so this shouldn&amp;rsquo;t be too difficult.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Start working on BOLT #2 message handlers&lt;/strong&gt;: Given the timeline, I’ll begin work on the BOLT #2 messages next week. With twelve BOLT specifications in total, aiming to complete one spec per week is the reasonable goal.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Challenges&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;challenges&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#challenges&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I encountered several challenges this week but made steady progress. Fixing the &lt;code&gt;fuzz-amount-arith&lt;/code&gt; test proved difficult—while they still fail, I’m hopeful this reflects a genuine bug in CLN rather than my implementation. I also ran into linker errors, but after some digging I discovered &lt;code&gt;tools/update-mocks.sh&lt;/code&gt;, which generates mocks for missing functions. Since it only covered unit tests, I updated the &lt;code&gt;Makefile&lt;/code&gt; to include fuzz targets as well, alleviating many of my linker concerns.&lt;/p&gt;
+&lt;p&gt;Identifying the BOLT message handlers was tricky because of similar names across functions and files, but I think I have the hang of it now. Aside from these bigger hurdles, I encountered a few minor issues—but nothing I couldn’t resolve with assistance from Matt or AI tools. My prior work—including pre-SoB contributions and other open-source experience—proved invaluable for overcoming these day-to-day problems.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Matt is on vacation, so our next meeting is scheduled for next Monday. In the meantime, I hope to achieve solid results from my bug investigations and to review and add a substantial number of tests without compromising quality. If I stick to my plan, this should be entirely feasible.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Onto SoB</title>
+      <link>http://localhost:1313/sob/2025-05-12-onto-sob/</link>
+      <pubDate>Mon, 12 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/sob/2025-05-12-onto-sob/</guid>
+      <description>
+        
+        
+        &lt;h1&gt;Onto a Summer of Bitcoin&lt;/h1&gt;&lt;p&gt;This is Chandra, and I have been selected for Summer of Bitcoin (SoB) 2025 program with the Lightning Network under the mentorship of &lt;a href=&#34;https://github.com/morehouse&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Matt Morehourse&lt;/a&gt;. A part of me still cannot believe that I actually got in, while some other part thinks it is only reasonable given how much effort I put in for this. I feel a bit of an imposter syndrome, as there were a lot of good candidates for this year’s SoB and I was the one selected among them. In any case, I am excited to spend my summer vacation writing code for ingenious tech like Bitcoin. I hope to learn a lot and come out as a better programmer at the end of this project.&lt;/p&gt;
+&lt;h2&gt;About the project&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;about-the-project&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#about-the-project&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The project that I&amp;rsquo;m going to work on is &amp;lsquo;&lt;em&gt;Improve the fuzz testing for Core Lightning&lt;/em&gt;&amp;rsquo; and the proposal that got me selected can be found &lt;a href=&#34;https://drive.google.com/file/d/1AP8_2JnLRJ3rTZnSLFBkdfr4z49TJ8Eo/view?usp=drive_link&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;. To give a synopsis of the proposal, my task for this internship is to improve the existing fuzz targets for Core Lightning (CLN) and write new ones. A core focus of the project is introducing new stateful fuzz tests, as they are better suited to expose vulnerabilities in networking protocols like the Lightning Network.&lt;/p&gt;
+&lt;p&gt;I already have some experience with working on CLN&amp;rsquo;s fuzz tests from the patches that I worked on pre-SoB, but writing meaningful tests that expose hidden bugs is going to take a much more deeper understanding of CLN, and the Lightining Network in general. Nonetheless, it&amp;rsquo;s something that I believe that I can work towards and get meaningful results out of, owing to the experience I have accumulated through SoB&amp;rsquo;s selection process.&lt;/p&gt;
+&lt;h2&gt;Goals&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;goals&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#goals&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In the time period from May 8 to May 15, SoB contributors are expected to read up documentation, get familiar with the codebase and tools, set up expectations and milestones, start engaging with the community, complete the required paperwork and so forth. In my SoB proposal, I outlined this time period to learn about CLN and contribute a few patches towards that goal. Keeping this in mind, here&amp;rsquo;s a list of my goals for what&amp;rsquo;s left of this week:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Go through CLN&amp;rsquo;s &lt;a href=&#34;https://github.com/ElementsProject/lightning/blob/master/doc/contribute-to-core-lightning/coding-style-guidelines.md&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coding Guidlines&lt;/a&gt; again to better understand the coding style errors that I need to be on the lookout for.&lt;/li&gt;
+&lt;li&gt;Finish reading up on &lt;a href=&#34;https://docs.corelightning.org/docs/contribute-to-core-lightning&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CLN Architecture&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Start looking for more suitable targets to fuzz test.&lt;/li&gt;
+&lt;li&gt;Finish what&amp;rsquo;s left of the initial paperwork.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Till next time,&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Chandra&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

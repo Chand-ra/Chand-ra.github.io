@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="robots" content="noindex, nofollow" />
+  <link rel="icon shortcut" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" id="favicon-svg" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
+<title>SoB_ Final Report – Chandra Pratap</title>
+  <meta name="description" content="Summer of Bitcoin ‘25: Final ReportThis report summarizes the work performed by me in my project, Improve the fuzz testing for Core Lightning, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.
+Project summaryBitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.
+Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN)." /><link rel="canonical" href="http://localhost:1313/sob/2025-08-17-sob_-final-report/" itemprop="url" />
+
+<meta property="og:title" content="SoB_ Final Report">
+<meta
+  property="og:description"
+  content="
+    
+      Summer of Bitcoin &lsquo;25: Final ReportThis report summarizes the work performed by me in my project, Improve the fuzz testing for Core Lightning, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.
+Project summary
+    Bitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.
+Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN).
+    
+  ">
+<meta
+  property="og:type"
+  content="
+    article
+  ">
+<meta property="og:url" content="http://localhost:1313/sob/2025-08-17-sob_-final-report/"><meta property="article:section" content="sob">
+
+<meta
+  property="article:published_time"
+  content="2025-08-17T00:00:00+00:00">
+
+
+<meta
+  property="article:modified_time"
+  content="2025-08-17T00:00:00+00:00">
+
+
+
+  <meta itemprop="name" content="SoB_ Final Report">
+  <meta itemprop="description" content="Summer of Bitcoin ‘25: Final ReportThis report summarizes the work performed by me in my project, Improve the fuzz testing for Core Lightning, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.
+Project summaryBitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.
+Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN).">
+  <meta itemprop="datePublished" content="2025-08-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1075">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SoB_ Final Report">
+  <meta name="twitter:description" content="Summer of Bitcoin ‘25: Final ReportThis report summarizes the work performed by me in my project, Improve the fuzz testing for Core Lightning, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.
+Project summaryBitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.
+Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN).">
+<link href="/css/compiled/main.css" rel="stylesheet" />
+    <link href="/css/variables.css" rel="stylesheet" />
+    <link href="/css/custom.css" rel="stylesheet" />
+
+  
+<script src="/js/main-head.js" integrity=""></script>
+
+  
+  
+  </head>
+<body>
+    <a href="#content" class="hx:sr-only hx:focus-visible:not-sr-only hx:focus-visible:fixed hx:focus-visible:z-50 hx:focus-visible:top-2 hx:focus-visible:left-2 hx:focus-visible:bg-primary-500 hx:focus-visible:text-white hx:focus-visible:px-4 hx:focus-visible:py-2 hx:focus-visible:rounded-md hx:focus-visible:text-sm hx:focus-visible:font-medium">Skip to content</a><div class="hextra-nav-container hx:sticky hx:top-0 hx:z-20 hx:w-full hx:bg-transparent hx:print:hidden">
+  <div
+    class="hextra-nav-container-blur hx:pointer-events-none hx:absolute hx:z-[-1] hx:h-full hx:w-full hx:bg-white hx:dark:bg-dark hx:shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] hx:contrast-more:shadow-[0_0_0_1px_#000] hx:dark:shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] hx:contrast-more:dark:shadow-[0_0_0_1px_#fff]"
+  ></div>
+
+  <nav class="hextra-max-navbar-width hx:mx-auto hx:flex hx:items-center hx:justify-end hx:gap-2 hx:h-16 hx:px-6">
+    <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="/">
+    <img class="hx:mr-2 hx:block hx:dark:hidden" src="/images/logo.svg" alt="Logo" height="20" width="20" />
+    <img class="hx:mr-2 hx:hidden hx:dark:block" src="/images/logo.svg" alt="Dark Logo" height="20" width="20" />
+    <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none">Chandra Pratap</span>
+</a>
+<button type="button" aria-label="Menu" aria-expanded="false" class="hextra-hamburger-menu hx:cursor-pointer hx:-mr-2 hx:rounded-sm hx:p-2 hx:active:bg-gray-400/20 hx:md:hidden hx:hextra-focus-visible-inset"><svg height=24 fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg></button>
+  </nav>
+</div>
+
+  <div class='hx:mx-auto hx:flex hextra-max-page-width'>
+    <aside class="hextra-sidebar-container hx:flex hx:flex-col hx:print:hidden hx:md:top-16 hx:md:shrink-0 hx:md:w-64 hx:md:self-start hx:max-md:[transform:translate3d(0,-100%,0)] hx:md:hidden hx:xl:block">
+    <div class="hx:px-4 hx:pt-4 hx:md:hidden">
+      <div class="hextra-search-wrapper hx:relative hx:md:w-64">
+  <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
+    <input
+      placeholder="Search..."
+      aria-label="Search..."
+      class="hextra-search-input hx:hextra-focus-visible hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus-visible:bg-white hx:dark:focus-visible:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current"
+      type="search"
+      autocomplete="off"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="hextra-search-results hextra-scrollbar hx:hidden hx:border hx:border-gray-200 hx:bg-white hx:text-gray-100 hx:dark:border-neutral-800 hx:dark:bg-neutral-900 hx:absolute hx:top-full hx:z-20 hx:mt-2 hx:overflow-auto hx:overscroll-contain hx:rounded-xl hx:py-2.5 hx:shadow-xl hx:max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] hx:md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] hx:inset-x-0 hx:ltr:md:left-auto hx:rtl:md:right-auto hx:contrast-more:border hx:contrast-more:border-gray-900 hx:contrast-more:dark:border-gray-50 hx:w-screen hx:min-h-[100px] hx:max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      aria-label="Search results"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+    <div class="hextra-search-status hx:sr-only" aria-live="polite" role="status"></div>
+  </div>
+</div>
+
+    </div><div class="hextra-scrollbar hx:overflow-y-auto hx:overflow-x-hidden hx:p-4 hx:grow hx:md:h-[calc(100vh-var(--navbar-height)-var(--menu-height))]">
+    <ul class="hx:flex hx:flex-col hx:gap-1 hx:md:hidden">
+      
+      
+    </ul>
+
+    <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div></div>
+  
+  
+    <div class="hx:md:hidden  hx:sticky hx:bottom-0 hx:max-h-(--menu-height) hx:bg-white hx:dark:bg-dark hx:mx-4 hx:py-4 hx:shadow-[0_-12px_16px_#fff] hx:flex hx:items-center hx:gap-2 hx:border-gray-200 hx:dark:border-neutral-800 hx:dark:shadow-[0_-12px_16px_#111] hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:shadow-none hx:border-t" data-toggle-animation="show"><div class="hx:flex hx:grow hx:flex-col"><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
+  <button
+    title="Change theme"
+    data-state="closed"
+    data-location="bottom"
+    class="hextra-theme-toggle hx:cursor-pointer hx:rounded-md hx:text-left hx:font-medium hx:h-7 hx:px-2 hx:text-xs hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:font-medium hx:text-gray-600 hx:transition-colors hx:dark:text-gray-400 hx:grow"
+    type="button"
+    aria-label="Change theme"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    <div class="hx:flex hx:items-center hx:gap-2 hx:capitalize"><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden">Light</span><svg height=12 class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden">Dark</span><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor">
+  <path d="M 11.996094,2 C 6.4986225,2.0192368 2.03125,6.5024993 2.03125,12 c 0,5.497501 4.4673725,9.980763 9.964844,10 H 12 12.0039 c 5.497471,-0.01924 9.964844,-4.502499 9.964844,-10 0,-5.4975007 -4.467373,-9.9807632 -9.964844,-10 H 12 Z M 12,4 c 4.417218,0.017598 7.96875,3.5822356 7.96875,8 0,4.417764 -3.551532,7.982402 -7.96875,8 z" />
+</svg>
+<span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden">System</span></div>
+  </button>
+  <ul
+    class="hextra-theme-toggle-options hx:hidden hx:z-20 hx:max-h-64 hx:overflow-auto hx:rounded-lg hx:border hx:border-gray-200 hx:bg-white hx:p-1 hx:text-sm hx:shadow-lg hx:dark:border-neutral-700 hx:dark:bg-neutral-900"
+    style="position: fixed; inset: auto auto 0px 0px; margin: 0px; min-width: 100px;"
+    data-theme="light"
+    role="menu"
+  >
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="true"
+        tabindex="-1"
+        data-item="light"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        Light
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="dark"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        Dark
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="system"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        System
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+  </ul>
+</div>
+</div></div></aside>
+    
+<nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="Table of contents">
+    <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#project-summary">Project summary
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#work-done">Work done
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#improvements-to-existing-tests">Improvements to existing tests
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:ltr:pl-4 hx:rtl:pr-4 hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#new-tests">New tests
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#outcomes-achieved">Outcomes achieved
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#future-work--next-steps">Future Work &amp; Next Steps
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#closing-thoughts">Closing thoughts
+        </a>
+      </li></ul>
+      <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
+        <button id="backToTop" tabindex="-1" onClick="scrollUp();" class="hx:cursor-pointer hx:transition-all hx:duration-75 hx:opacity-0 hx:text-xs hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-100 hx:contrast-more:text-gray-800 hx:contrast-more:dark:text-gray-50">
+          <span>Scroll to top</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:inline hx:ltr:ml-1 hx:rtl:mr-1 hx:h-3.5 hx:w-3.5 hx:rounded-full hx:border hx:border-gray-500 hx:hover:border-gray-900 hx:dark:border-gray-400 hx:dark:hover:border-gray-100 hx:contrast-more:border-gray-800 hx:contrast-more:dark:border-gray-50">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
+        
+        <br class="hx:mt-1.5 hx:text-sm" />
+        <h1 class="hx:text-center hx:mt-2 hx:text-4xl hx:font-bold hx:tracking-tight hx:text-slate-900 hx:dark:text-slate-100">SoB_ Final Report</h1>
+        <div class="hx:mb-16"></div>
+        <div class="content">
+          <h1>Summer of Bitcoin &lsquo;25: Final Report</h1><p>This report summarizes the work performed by me in my project, <strong>Improve the fuzz testing for Core Lightning</strong>, during Summer of Bitcoin ‘25 under the organization Lightning-Network, mentored by Matt Morehouse.</p>
+<h2>Project summary<span class="hx:absolute hx:-mt-20" id="project-summary"></span>
+    <a href="#project-summary" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Bitcoin’s Lightning Network has experienced growing adoption and routing capacity with over $400 million in Bitcoin locked in public channels, making security a top priority.</p>
+<p>Fuzz testing is a valuable tool for enhancing the security and robustness of various Lightning Network implementations, but it has received limited attention from LN maintainers. This project aimed at changing that by strengthening fuzz testing for the second most used LN implementation- Core Lightning (CLN).</p>
+<p>This effort not only expanded test coverage but also led to the discovery and disclosure of <strong>8 vulnerabilities</strong>, including memory safety bugs and critical denial-of-service (DoS) vectors.</p>
+<h2>Work done<span class="hx:absolute hx:-mt-20" id="work-done"></span>
+    <a href="#work-done" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>The work done throughout this project can be broadly classified into two categories: <em>improvements to the existing fuzz tests</em> for Core Lightning and <em>adding new ones</em>.</p>
+<p>There&rsquo;s also  investigating, disclosing, and fixing the vulnerabilities uncovered by these efforts, but that is detailed separately in the <strong>Outcomes Achieved</strong> section.</p>
+<p>The following is a list of all work performed, broken down by category. A few other targets were explored but ultimately deprioritized to focus on higher-impact areas.</p>
+<h3>Improvements to existing tests<span class="hx:absolute hx:-mt-20" id="improvements-to-existing-tests"></span>
+    <a href="#improvements-to-existing-tests" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8373"target="_blank" rel="noopener"><code>fuzz-initial_channel</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8366"target="_blank" rel="noopener"><code>fuzz-bolt11</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8311"target="_blank" rel="noopener"><code>fuzz-bech32</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8301"target="_blank" rel="noopener"><code>fuzz-bigsize</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8297"target="_blank" rel="noopener"><code>fuzz-addr</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8397"target="_blank" rel="noopener"><code>fuzz-close_tx</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8386"target="_blank" rel="noopener"><code>fuzz-channel_id</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8183"target="_blank" rel="noopener"><code>fuzz-base32-64</code></a> (status: Merged)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8404"target="_blank" rel="noopener"><code>fuzz-bolt12-invrequest-decode</code></a> (status: Merged)</li>
+<li><code>fuzz-hsm_encryption</code> (status: not pushed upstream, locally complete and awaiting final review)</li>
+<li><code>fuzz-bolt12-offer_decode</code> (status: Not pushed upstream, locally complete and awaiting final review)</li>
+</ul>
+<h3>New tests<span class="hx:absolute hx:-mt-20" id="new-tests"></span>
+    <a href="#new-tests" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8437"target="_blank" rel="noopener"><code>fuzz-full_channel</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8423"target="_blank" rel="noopener"><code>fuzz-gossipd_connectd</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8437"target="_blank" rel="noopener"><code>fuzz-open_channel</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8324"target="_blank" rel="noopener"><code>fuzz-wireaddr</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8298"target="_blank" rel="noopener"><code>fuzz-amount-arith</code></a> (status: un-ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8390"target="_blank" rel="noopener"><code>fuzz-codex32</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8385"target="_blank" rel="noopener"><code>fuzz-init_received</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8312"target="_blank" rel="noopener"><code>fuzz-funder-policy</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8304"target="_blank" rel="noopener"><code>fuzz-error-warning</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8244"target="_blank" rel="noopener"><code>fuzz-wire-closing_sig</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8216"target="_blank" rel="noopener"><code>fuzz-wire-closing_complete</code></a> (status: ACKed)</li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8185"target="_blank" rel="noopener"><code>fuzz-hmac-sha256</code></a> (status: Merged)</li>
+<li><code>fuzz-handle_onion</code> (status: Not pushed upstream, locally complete and awaiting final review)</li>
+<li><code>fuzz-open_channel2</code> (status: Not pushed upstream, pending feedback on related PRs)</li>
+<li><code>fuzz-pong</code> (status: Not pushed upstream, locally complete and awaiting final review)</li>
+<li><code>fuzz-route-calc</code> (status: Not pushed upstream, pending feedback on related PRs)</li>
+</ul>
+<p>Besides adding and improving tests, I maintained a weekly blog of my SoB journey, starting with the initial onboarding and ending with week 13 of the contribution period, which can be found <a href="https://chand-ra.github.io/"target="_blank" rel="noopener">here</a>.</p>
+<h2>Outcomes achieved<span class="hx:absolute hx:-mt-20" id="outcomes-achieved"></span>
+    <a href="#outcomes-achieved" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>The primary outcome of this project is the set of vulnerabilities discovered through the improvements made to the fuzzing suite. The increase in code-coverage, and hence the robustness of the codebase, is the secondary outcome.</p>
+<p>The following is a comprehensive list of all confirmed vulnerabilities. A couple other potential issues were investigated but are not included, as they were ultimately determined to be non-issues or false positives.</p>
+<ul>
+<li>
+<p><strong><code>NaN</code> bug in route calculation</strong>: Due to the imprecision of CLN&rsquo;s <code>fp16_t</code> type, the route score for a node can be set to <code>NaN</code> in some cases. This leads to a runtime error when CLN is compiled with UBSan. In production, this might prevent usable nodes from being included in the route calculations making the network inefficient. A fix has been devised <a href="https://github.com/ElementsProject/lightning/pull/8357"target="_blank" rel="noopener">here</a>.</p>
+</li>
+<li>
+<p><strong>Out-of-bounds bug in the address parser</strong>: When parsing a valid <code>DNS</code> name that is exactly 255 bytes long, the address parser tries to append a <code>NULL</code> terminator at the end of a 255-bytes long buffer, causing a runtime error when compiled with UBSan. In production, the port for the address gets corrupted. A fix has been implemented <a href="https://github.com/ElementsProject/lightning/pull/8325"target="_blank" rel="noopener">here</a>.</p>
+</li>
+<li>
+<p><strong>Heap-buffer-overflow error in address formatter</strong>: The address parser doesn&rsquo;t correctly format a <code>DNS</code> address that is exactly 255 bytes long, causing the corresponding address formatter to read out of bounds when trying to format this address. A deeper discussion of the issue is available <a href="https://github.com/ElementsProject/lightning/pull/8324#issuecomment-3127327957"target="_blank" rel="noopener">here</a>.</p>
+</li>
+<li>
+<p><strong>Scaling with invalid factors</strong>: <code>amount_sat_scale()</code> and <code>amount_msat_scale()</code> are used in various balance calculations in CLN, but can produce bogus values when scaling parameter is <code>-NaN</code> or negative. <a href="https://github.com/ElementsProject/lightning/pull/8306"target="_blank" rel="noopener">Here</a> is a fix for the issue.</p>
+</li>
+<li>
+<p><strong>Dangling memory allocation in <code>daemon_conn</code> allocator</strong>: Use of incorrect context in <code>daemon_conn_new_()</code> results in a dangling <code>daemon_conn</code> object. A proposed fix exists <a href="https://github.com/ElementsProject/lightning/pull/8424"target="_blank" rel="noopener">here</a>.</p>
+</li>
+<li>
+<p><strong>DoS vulnerability due to assertion failure</strong>: A specifically crafted message can cause an assertion failure and hence, a crash. Further details are withheld pending a coordinated release. The vulnerability has been disclosed to the Core Lightning maintainers.</p>
+</li>
+<li>
+<p><strong>DoS vulnerability due to memory overflow</strong>: A certain message can cause a node&rsquo;s memory consumption to grow unbounded resulting in a resource exhaustion vulnerability. Further details are withheld pending a coordinated release. The vulnerability has been disclosed to the Core Lightning maintainers.</p>
+</li>
+<li>
+<p><strong>(Possible vulnerability) DoS vulnerability due to memory leak</strong>: A specific message may trigger memleak in a node. More details are witheld due to uncertain severity and possible fatal nature of the vulnerability.</p>
+</li>
+</ul>
+<h2>Future Work &amp; Next Steps<span class="hx:absolute hx:-mt-20" id="future-work--next-steps"></span>
+    <a href="#future-work--next-steps" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>My highest priority is to address feedback on the following pull requests to get them to an approved (ACKed) state:</p>
+<ul>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8373"target="_blank" rel="noopener"><code>fuzz-initial_channel</code></a></li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8437"target="_blank" rel="noopener"><code>fuzz-full_channel</code></a></li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8423"target="_blank" rel="noopener"><code>fuzz-gossipd_connectd</code></a></li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8437"target="_blank" rel="noopener"><code>fuzz-open_channel</code></a></li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8324"target="_blank" rel="noopener"><code>fuzz-wireaddr</code></a></li>
+<li><a href="https://github.com/ElementsProject/lightning/pull/8298"target="_blank" rel="noopener"><code>fuzz-amount-arith</code></a></li>
+</ul>
+<p>After that, I will push the following completed PR&rsquo;s, which have not yet been sent upstream, for review:</p>
+<ul>
+<li><code>fuzz-hsm_encryption</code></li>
+<li><code>fuzz-bolt12-offer_decode</code></li>
+<li><code>fuzz-handle_onion</code></li>
+<li><code>fuzz-open_channel2</code></li>
+<li><code>fuzz-pong</code></li>
+<li><code>fuzz-route-calc</code></li>
+</ul>
+<p>Finally, the memleak vulnerability requires further investigation, which should be undertaken as soon as it becomes feasible.</p>
+<h2>Closing thoughts<span class="hx:absolute hx:-mt-20" id="closing-thoughts"></span>
+    <a href="#closing-thoughts" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Before this program, I had little experience with fuzz-testing, security, or Bitcoin development. Now, I feel confident in my ability to contribute to this influential open-source community. I also learned valuable time management skills that improved my work-life balance, making this experience far more enjoyable than my past internships.</p>
+<p>My biggest challenge came towards the end of the program, when my academic and internship commitments began to collide. Navigating these overlapping commitments was a valuable learning experience. This journey also taught me that understanding the Lightning-Network (or Bitcoin, in general) is a monumental task. The best way to make progress is to learn actively on the job and ask for help when you&rsquo;re stuck. Mentors are always more than happy to provide guidance.</p>
+<p>Post SoB, my immediate priority is to see my remaining work through to completion until all tests are ACKed and merged. More importantly though, I’ll maintain my passion for open source and try to stay active in the Bitcoin community in any capacity I can. I’ll also try to be helpful to newcomers and help them ease their way into this wonderful community.</p>
+<p>In closing, I want to say thank you to my mentor, Matt. Thank you to the Lightning Network community. And thank you, Summer of Bitcoin, for this incredible journey.</p>
+<p><em>Till next time,</em></p>
+<p><em>Chandra</em>.</p>
+
+        </div>
+        <div class="hx:mt-16"></div>
+        
+      </main>
+    </article>
+  </div>
+
+      <footer class="hextra-footer hx:bg-gray-100 hx:pb-[env(safe-area-inset-bottom)] hx:dark:bg-neutral-900 hx:print:bg-transparent"><div class="hx:mx-auto hx:flex hx:gap-2 hx:py-2 hx:px-4 hextra-max-footer-width"><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
+  <button
+    title="Change theme"
+    data-state="closed"
+    data-location="bottom"
+    class="hextra-theme-toggle hx:cursor-pointer hx:rounded-md hx:text-left hx:font-medium hx:h-7 hx:px-2 hx:text-xs hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:font-medium hx:text-gray-600 hx:transition-colors hx:dark:text-gray-400 hx:grow"
+    type="button"
+    aria-label="Change theme"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    <div class="hx:flex hx:items-center hx:gap-2 hx:capitalize"><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden">Light</span><svg height=12 class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden">Dark</span><svg height=12 class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="currentColor">
+  <path d="M 11.996094,2 C 6.4986225,2.0192368 2.03125,6.5024993 2.03125,12 c 0,5.497501 4.4673725,9.980763 9.964844,10 H 12 12.0039 c 5.497471,-0.01924 9.964844,-4.502499 9.964844,-10 0,-5.4975007 -4.467373,-9.9807632 -9.964844,-10 H 12 Z M 12,4 c 4.417218,0.017598 7.96875,3.5822356 7.96875,8 0,4.417764 -3.551532,7.982402 -7.96875,8 z" />
+</svg>
+<span class="hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden">System</span></div>
+  </button>
+  <ul
+    class="hextra-theme-toggle-options hx:hidden hx:z-20 hx:max-h-64 hx:overflow-auto hx:rounded-lg hx:border hx:border-gray-200 hx:bg-white hx:p-1 hx:text-sm hx:shadow-lg hx:dark:border-neutral-700 hx:dark:bg-neutral-900"
+    style="position: fixed; inset: auto auto 0px 0px; margin: 0px; min-width: 100px;"
+    data-theme="light"
+    role="menu"
+  >
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="true"
+        tabindex="-1"
+        data-item="light"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        Light
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="dark"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        Dark
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=light]:hidden hx:group-data-[theme=system]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+    <li role="none" class="hx:flex hx:flex-col">
+      <button
+        type="button"
+        role="menuitemradio"
+        aria-checked="false"
+        tabindex="-1"
+        data-item="system"
+        class="hx:text-gray-700 hx:dark:text-gray-300 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:hover:bg-neutral-800 hx:dark:hover:text-gray-100 hx:relative hx:cursor-pointer hx:whitespace-nowrap hx:rounded-sm hx:py-1.5 hx:transition-colors hx:ltr:pl-3 hx:ltr:pr-9 hx:rtl:pr-3 hx:rtl:pl-9 hx:text-left hx:w-full hx:bg-transparent hx:border-0"
+      >
+        System
+         <span class="hx:absolute hx:inset-y-0 hx:flex hx:items-center hx:ltr:right-3 hx:rtl:left-3 hx:group-data-[theme=dark]:hidden hx:group-data-[theme=light]:hidden"><svg height=1em width=1em xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+      </button>
+    </li>
+  </ul>
+</div>
+</div><hr class="hx:border-gray-200 hx:dark:border-neutral-800" /><div class="hextra-custom-footer hextra-max-footer-width hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400"></div><div
+      class="hextra-max-footer-width hx:mx-auto hx:flex hx:justify-center hx:py-12 hx:pl-[max(env(safe-area-inset-left),1.5rem)] hx:pr-[max(env(safe-area-inset-right),1.5rem)] hx:text-gray-600 hx:dark:text-gray-400 hx:md:justify-start"
+    >
+      <div class="hx:flex hx:w-full hx:flex-col hx:items-center hx:sm:items-start"><div class="hx:font-semibold"><a class="hx:flex hx:text-sm hx:items-center hx:gap-1 hx:text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
+    <span>Powered by Hextra<svg height=1em class="hx:inline-block hx:ltr:ml-1 hx:rtl:mr-1 hx:align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
+  </a></div></div>
+    </div></footer>
+    
+    <script defer src="/js/main.js" integrity=""></script>
+<script defer src="/js/flexsearch.9f5b5908f93ae86f1ecd4b043b799f580c2d1654e703dd9357d568ac41b2547a.js" integrity="sha256-n1tZCPk66G8ezUsEO3mfWAwtFlTnA92TV9VorEGyVHo=" crossorigin="anonymous"></script><script defer src="/en.search.js" integrity=""></script>
+  </body>
+</html>

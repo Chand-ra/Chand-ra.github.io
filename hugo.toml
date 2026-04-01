@@ -1,0 +1,33 @@
+baseURL = "https://Chand-ra.github.io/"
+title = "Chandra Pratap"
+theme = "hextra"
+
+[params]
+  displayNextPrev = true
+  showLineNumbers = true
+  
+  # Keeps the math engine from crashing
+  [params.math]
+    enable = true
+
+[markup]
+  # Allows our custom HTML shortcodes
+  [markup.goldmark.renderer]
+    unsafe = true
+    
+  # Enables the LaTeX parser
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)'], ['$', '$']]
+
+[[menu.main]]
+  name = "Resume"
+  url = "/resume/"
+  weight = 1
+
+[[menu.main]]
+  name = "Blog Archive"
+  url = "/archive/"
+  weight = 2
