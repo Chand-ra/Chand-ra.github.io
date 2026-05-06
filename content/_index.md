@@ -13,6 +13,7 @@ _Extensive, week-by-week documentation of my long-term open-source commitments._
 
 
 {{< cards >}}
+  {{< card link=/sob_2/ title="Summer of Bitcoin 2026" image="/images/sob.png" >}}
   {{< card link=/sob/ title="Summer of Bitcoin 2025" image="/images/sob.svg" >}}
   {{< card link=/gsoc/ title="Google Summer of Code 2024" image="/images/gsoc.svg" >}}
 {{< /cards >}}
