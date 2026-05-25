@@ -29,6 +29,8 @@ This week marked the official start of Summer of Bitcoin. Week 1 was primarily f
 
 - **Get the solution to the IR dependency issue merged:** Although the implementation is done, I expect significant back-and-forth during the code review. It is a large PR (8 commits in total) that touches many different areas of the codebase. Responding to this feedback will be my top priority throughout the week, as getting this merged is absolutely pivotal for the rest of the project's success.
 
+- **Triage the CLN memory crash:** There's a potential memory bug in Core Lightning that I discovered pre-SoB, but it is very flaky and hard to reproduce deterministically, even for the fuzzer. The first thing I'll need to do is find a way to get the fuzzer to hit this crash reliably, which I plan on exploring in the upcoming weeks, although it will be low on the priority for now.
+
 ## Challenges
 
 My relative inexperience with Rust proved to be quite a thorn, and I believe it is the primary reason the IR dependency solution took as long as it did to implement. However, I now feel much more comfortable with the language than I did at the start of the project. While using AI to write parts of the code might have sped up the process, I am glad I opted for the old-school approach. It was a lot more fun, and the hands-on experience means I can write code faster and better moving forward.
