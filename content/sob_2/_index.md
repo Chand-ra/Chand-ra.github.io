@@ -21,5 +21,5 @@ And following are my weekly progress logs:
 
 {{< cards >}}
   {{< card link="week_0" title="SoB: Week 0" icon="calendar" >}}
-  {{< card link="#todo" title="SoB: Week 1 (Coming Soon)" icon="calendar" >}}
+  {{< card link="week_1" title="SoB: Week 1" icon="calendar" >}}
 {{< /cards >}}
