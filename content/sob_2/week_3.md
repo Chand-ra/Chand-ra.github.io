@@ -1,6 +1,6 @@
 ---
 title: "SoB Week 3"
-date: 2026-06-6
+date: 2026-06-06
 ---
 
 ## Overview
