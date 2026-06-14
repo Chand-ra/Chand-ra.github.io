@@ -24,4 +24,5 @@ And following are my weekly progress logs:
   {{< card link="week_1" title="SoB: Week 1" icon="calendar" >}}
   {{< card link="week_2" title="SoB: Week 2" icon="calendar" >}}
   {{< card link="week_3" title="SoB: Week 3" icon="calendar" >}}
+  {{< card link="week_4" title="SoB: Week 4" icon="calendar" >}}
 {{< /cards >}}
