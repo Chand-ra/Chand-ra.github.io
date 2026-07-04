@@ -1,6 +1,6 @@
 ---
-title: "SoB Week 6"
-date: 2026-06-27
+title: "SoB Week 7"
+date: 2026-07-04
 ---
 
 ## Overview
