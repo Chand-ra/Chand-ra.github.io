@@ -11,7 +11,7 @@ While I didn't initially plan on participating in Summer of Bitcoin 2026, when t
 
 ## About the project
 
-Smite is a coverage-guided [snapshot fuzzing](https://appsec.guide/docs/fuzzing/snapshot-fuzzing/) framework for the Lightning Network, similar to what [fuzzamoto](https://dergoegge.github.io/fuzzamoto/index.html) provides for Bitcoin full-node implementations. It is designed to solve a major limitation in traditional fuzzing: the lack of structure-awareness. This deficiency often prevents standard byte-level fuzzing from reaching the deep logic paths of complex protocols.
+Smite is a coverage-guided [snapshot fuzzing](https://appsec.guide/docs/fuzzing/snapshot-fuzzing/) framework for the Lightning Network, similar to what [fuzzamoto](https://brink.dev/blog/2026/01/07/fuzzamoto-introduction/) provides for Bitcoin full-node implementations. It is designed to solve a major limitation in traditional fuzzing: the lack of structure-awareness. This deficiency often prevents standard byte-level fuzzing from reaching the deep logic paths of complex protocols.
 
 By becoming structure-aware, a fuzzer can generate and mutate sequences of valid messages that successfully bypass initial parsing checks. Smite (and fuzzamoto) achieve this by utilizing a custom [Intermediate Representation (IR)](https://en.wikipedia.org/wiki/Intermediate_representation). This IR encodes the necessary type and structural knowledge of the protocol, enabling the fuzzer to generate "short programs" that are executed within a Virtual Machine.
 
