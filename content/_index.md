@@ -5,8 +5,11 @@ title: "Chandra Pratap"
 
 Hey there! I am an Integrated BS + MS Mathematics student at **NIT Surat, India** with a passion for open-source. Currently exploring security and applied cryptography.
 
-### Posts
+### Recent Blogs
 {{< recent >}}
+
+### Posts
+{{< post_preview >}}
 
 ### Project Journals
 _Extensive, week-by-week documentation of my long-term open-source commitments._
