@@ -3,8 +3,6 @@ title: "KittenCast: A local, lightweight document to audiobook compiler"
 date: 2026-03-22
 ---
 
-### **KittenCast: A local, lightweight document-to-audiobook compiler**
-
 I’m excited to share a project I’ve been working on: [KittenCast](https://github.com/Chand-ra/KittenCast), a lightweight CLI tool that converts EPUBs, PDFs, Word docs, and plain text files into audiobooks.
 
 The core requirement was strict: **100% local operation.** No data leaks to cloud APIs, no unexpected usage costs: just your personal library and your CPU. 
