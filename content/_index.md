@@ -9,7 +9,7 @@ Hey there! I am an Integrated BS + MS Mathematics student at **NIT Surat, India*
 {{< recent >}}
 
 ### Posts
-{{< post_preview >}}
+{{< posts_preview >}}
 
 ### Project Journals
 _Extensive, week-by-week documentation of my long-term open-source commitments._
